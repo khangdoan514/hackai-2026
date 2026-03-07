@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from openai import AsyncOpenAI
+from openai import AsyncOpenAI # type: ignore
 from app.config import settings
 from pydantic import BaseModel
 import uvicorn
@@ -16,6 +16,7 @@ app = FastAPI(
 api_key = settings.openai_api_key
 if not api_key:
     raise ValueError("API Key Missing")
+
 client = AsyncOpenAI(api_key=api_key)
 
 # CORS

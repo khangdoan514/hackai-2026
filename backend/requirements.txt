@@ -1,6 +1,7 @@
 fastapi==0.127.0
 uvicorn==0.41.0
 asyncio==4.0.0
-openai
-pydantic
-python-dotenv
+openai==2.26.0
+pydantic==2.12.5
+pydantic-settings==2.13.1
+python-dotenv==1.2.2
