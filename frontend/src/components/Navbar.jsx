@@ -4,12 +4,12 @@ export default function Navbar() {
   const location = useLocation()
 
   return (
-    <nav className="px-20 py-8 flex items-center justify-between transition-all duration-300 z-30">
+    <nav className="px-15 pt-1 pb-4 text-2xl flex items-center justify-between inset-0 rounded-xl transition-all duration-300">
       {/* ==================== Navigation Links ==================== */}
       <div className="flex items-center space-x-3 flex-1">
         <Link
           to="/"
-          className="text-2xl font-bold hover:opacity-80 transition-opacity"
+          className="font-bold hover:opacity-80 transition-opacity"
         >
           <span className="bg-gradient-to-b from-primary-black to-primary-black bg-clip-text">PapaQuant</span>
         </Link>
