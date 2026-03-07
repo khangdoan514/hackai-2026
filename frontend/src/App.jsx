@@ -6,7 +6,7 @@ import './App.css'
 
 export default function App() {
   return (
-    <div className="bg-light-pink text-3xl text-center">
+    <div className="min-h-screen bg-black text-3xl text-center">
       <NavBar />
       <Routes>
         <Route path="/" element={ <Home /> } />
