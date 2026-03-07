@@ -1,7 +1,12 @@
 from dotenv import load_dotenv # type: ignore
 import os
+from openai import AsyncOpenAI
+from pydantic_settings import BaseSettings, SettingsConfigDict
 
 load_dotenv()
 
-class Config:
-    OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+class Settings(BaseSettings):
+    openai_api_key: str
+    openai_model: str = "gpt-4.1-mini"
+    model_config = SettingsConfigDict(env_file=".env")
+settings = Settings()

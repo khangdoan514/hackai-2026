@@ -1,5 +1,8 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from openai import OpenAI
+from app.config import Settings
+from pydantic import BaseModel
 import uvicorn
 import asyncio
 
@@ -38,6 +41,11 @@ async def main():
     server = uvicorn.Server(config)
         
     await server.serve()
+
+@app.get("/chat")
+async def chat():
+    pass
+
 
 if __name__ == "__main__":
     asyncio.run(main())
