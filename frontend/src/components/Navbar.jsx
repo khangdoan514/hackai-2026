@@ -20,7 +20,8 @@ export default function Navbar() {
           {[
             { path: '/', label: 'Home' },
             { path: '/about', label: 'About' },
-            { path: '/play', label: 'Play' }
+            { path: '/play', label: 'Play' },
+            { path: '/headlinetest', label: 'Headline Test' }
           ].map((item) => {
             const isActive = location.pathname === item.path || (item.path === '/' && location.pathname === '/home')
             return (

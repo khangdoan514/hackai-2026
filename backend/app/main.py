@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from openai import OpenAI # type: ignore
-from app.config import Settings
+from openai import AsyncOpenAI # type: ignore
+from app.config import settings
 from pydantic import BaseModel
 import uvicorn
 import asyncio
@@ -12,6 +12,12 @@ app = FastAPI(
     docs_url="/docs",
     redoc_url="/redoc"
 )
+
+api_key = settings.openai_api_key
+if not api_key:
+    raise ValueError("API Key Missing")
+
+client = AsyncOpenAI(api_key=api_key)
 
 # CORS
 app.add_middleware(
@@ -41,10 +47,14 @@ async def main():
     server = uvicorn.Server(config)
         
     await server.serve()
+    
+class ChatRequest(BaseModel):
+    prompt: str
 
-@app.get("/chat")
-async def chat():
-    pass
+@app.post("/chat")
+async def chat(request: ChatRequest):
+    response = await client.responses.create(model = settings.openai_model, input = request.prompt)
+    return {"response" : response.output_text}
 
 
 if __name__ == "__main__":
