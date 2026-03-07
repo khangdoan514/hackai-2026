@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from openai import OpenAI
+from openai import OpenAI # type: ignore
 from app.config import Settings
 from pydantic import BaseModel
 import uvicorn
