@@ -2,6 +2,7 @@ import NavBar from "./components/Navbar.jsx"
 import About from "./pages/About.jsx"
 import Home from "./pages/Home.jsx"
 import Play from "./pages/Play.jsx"
+import HeadlineTest from "./pages/HeadlineTest.jsx"
 import { Routes, Route } from "react-router-dom"
 import './App.css'
 
@@ -17,19 +18,20 @@ export default function App() {
 
             <div className="absolute -top-0 -right-4 w-4 h-4 bg-white"></div>
             <div className="absolute -top-0 -right-4 w-4 h-4 bg-black rounded-tl-full"></div>
-            
+
             <div className="bg-white rounded-b-xl relative z-20">
               <NavBar />
             </div>
           </div>
         </div>
-        
+
         {/* Routes - on black background */}
         <div className="text-white">
           <Routes>
             <Route path="/" element={ <Home /> } />
             <Route path="/about" element={ <About /> } />
             <Route path="/play" element={ <Play /> } />
+            <Route path="/headlinetest" element={<HeadlineTest />} />
           </Routes>
         </div>
       </div>
