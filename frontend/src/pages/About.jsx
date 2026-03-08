@@ -358,7 +358,7 @@ export default function About() {
         {activeTab === "stack" && STACK.map((item, i) => (
           <div
             key={item.layer}
-            className="rounded-xl p-6 flex flex-col gap-4 transition-all duration-300"
+            className="rounded-xl overflow-hidden flex flex-col transition-all duration-300"
             style={{
               background: C.cardBg,
               border: `1px solid ${hoveredStack === i ? item.border : C.border}`,
@@ -368,30 +368,29 @@ export default function About() {
             onMouseEnter={() => setHoveredStack(i)}
             onMouseLeave={() => setHoveredStack(null)}
           >
-            <div
-              className="w-10 h-10 rounded-lg flex items-center justify-center text-[11px] font-bold uppercase tracking-wider"
-              style={{
-                background: hoveredStack === i ? item.color : "rgba(255,255,255,0.04)",
-                border: `1px solid ${hoveredStack === i ? item.border : C.border}`,
-                color: hoveredStack === i ? "#fff" : C.textMuted,
-              }}
-            >
-              {item.layer.slice(0, 2)}
+            {/* Layer name */}
+            <div className="px-4 pt-4 pb-2">
+              <p className="text-[15px] font-bold text-white">{item.layer}</p>
             </div>
-            <p className="text-[18px] font-bold text-white">{item.layer}</p>
-            <div className="flex flex-wrap gap-2">
+
+            {/* Tool blocks stacked */}
+            <div className="flex flex-col gap-3 px-16 pb-4">
               {item.tools.map(t => (
-                <span
+                <div
                   key={t}
-                  className="text-[11px] px-3 py-1 rounded-md"
+                  className="w-full h-14 rounded-lg flex items-center px-4"
                   style={{
                     background: hoveredStack === i ? item.color : C.innerBg,
                     border: `1px solid ${hoveredStack === i ? item.border : C.border}`,
-                    color: hoveredStack === i ? "#fff" : "rgba(255,255,255,0.6)",
                   }}
                 >
-                  {t}
-                </span>
+                  <span
+                    className="text-[12px] font-medium"
+                    style={{ color: hoveredStack === i ? "#fff" : "rgba(255,255,255,0.6)" }}
+                  >
+                    {t}
+                  </span>
+                </div>
               ))}
             </div>
           </div>
