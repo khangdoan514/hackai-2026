@@ -56,7 +56,7 @@ const CustomTooltip = ({ active, payload, color }) => {
         background: "rgba(10,10,10,0.95)",
         border: `1px solid ${color}44`,
         borderRadius: 6,
-        padding: "8px 12px",
+        padding: "8px 10px",
         fontFamily: "'Space Mono', monospace",
         fontSize: 11,
       }}>
@@ -100,13 +100,13 @@ export default function Finance() {
           flex: 3,
           display: "flex",
           flexDirection: "column",
-          padding: "24px 28px",
+          padding: "0px 70px",
           borderRight: "1px solid rgba(255,255,255,0.06)",
           minWidth: 0,
           overflow: "hidden",
         }}>
           {/* Stock title + stats */}
-          <div style={{ marginBottom: 20, flexShrink: 0 }}>
+          <div style={{ marginTop: -10, marginBottom: 10, flexShrink: 0 }}>
             <div style={{ display: "flex", alignItems: "baseline", gap: 14, marginBottom: 6 }}>
               <span style={{ fontSize: 28, fontWeight: 700, letterSpacing: "-0.02em" }}>{stock.ticker}</span>
               <span style={{ fontSize: 13, color: "rgba(255,255,255,0.4)" }}>{stock.name}</span>
@@ -141,7 +141,7 @@ export default function Finance() {
           </div>
 
           {/* Chart */}
-          <div style={{ flex: 1, minHeight: 0 }}>
+          <div style={{ height: "55vh", minHeight: 0 }}>
             <ResponsiveContainer width="100%" height="100%">
               <AreaChart data={chartData} margin={{ top: 8, right: 8, bottom: 0, left: 0 }}>
                 <defs>
@@ -186,7 +186,7 @@ export default function Finance() {
           flex: 1,
           display: "flex",
           flexDirection: "column",
-          padding: "24px 20px",
+          padding: "24px 70px",
           minWidth: 0,
           gap: 16,
           overflow: "hidden",
@@ -237,7 +237,7 @@ export default function Finance() {
                     border: "1px solid rgba(255,255,255,0.1)",
                     borderRadius: 6,
                     zIndex: 100,
-                    maxHeight: 280,
+                    maxHeight: 100,
                     overflowY: "auto",
                     boxShadow: "0 16px 40px rgba(0,0,0,0.6)",
                   }}
@@ -305,7 +305,7 @@ export default function Finance() {
             <div style={{ fontSize: 9, color: "rgba(255,255,255,0.35)", letterSpacing: "0.15em", marginBottom: 8, flexShrink: 0 }}>
               ALL STOCKS
             </div>
-            <div style={{ flex: 1, minHeight: 0, overflowY: "auto" }}>
+            <div style={{ height: "40vh", minHeight: 0, overflowY: "auto" }}>
               {STOCKS.map(s => {
                 const up = s.pct >= 0
                 const c = up ? "#6AD972" : "#FF4455"
