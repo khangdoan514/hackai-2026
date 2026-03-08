@@ -106,10 +106,10 @@ export default function Finance() {
           overflow: "hidden",
         }}>
           {/* Stock title + stats */}
-          <div style={{ marginTop: -10, marginBottom: 10, flexShrink: 0 }}>
+          <div style={{ marginBottom: 10, flexShrink: 0 }}>
             <div style={{ display: "flex", alignItems: "baseline", gap: 14, marginBottom: 6 }}>
               <span style={{ fontSize: 28, fontWeight: 700, letterSpacing: "-0.02em" }}>{stock.ticker}</span>
-              <span style={{ fontSize: 13, color: "rgba(255,255,255,0.4)" }}>{stock.name}</span>
+              <span style={{ fontSize: 17, color: "rgba(255,255,255,0.4)" }}>{stock.name}</span>
             </div>
             <div style={{ display: "flex", alignItems: "baseline", gap: 12 }}>
               <span style={{ fontSize: 36, fontWeight: 700, letterSpacing: "-0.03em" }}>${stock.price.toFixed(2)}</span>
