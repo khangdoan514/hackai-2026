@@ -11,7 +11,7 @@ export default function Navbar() {
           to="/"
           className="font-bold hover:opacity-80 transition-opacity"
         >
-          <span className="bg-gradient-to-b from-primary-black to-primary-black bg-clip-text">PapaQuant</span>
+          <span className="text-white bg-clip-text">PapaQuant</span>
         </Link>
       </div>
 
@@ -28,8 +28,8 @@ export default function Navbar() {
               <Link
                 key={item.path}
                 to={item.path}
-                className={`${isActive ? 'text-black' : 'text-black/50'
-                } hover:text-black font-bold transition-colors duration-200 text-base relative group px-1 py-2`}
+                className={`${isActive ? 'text-white' : 'text-white/50'
+                } hover:text-white font-bold transition-colors duration-200 text-base relative group px-1 py-2`}
               >
                 {item.label}
 
