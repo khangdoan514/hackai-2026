@@ -10,7 +10,13 @@ export default function App() {
   return (
     <div className="min-h-screen relative">
       <div className="absolute inset-0 bg-white z-10 overflow-y-auto"></div>
-      <div className="absolute inset-0 bg-black text-3xl text-center rounded-xl m-4 z-20 overflow-y-auto">
+      <div
+        className="absolute inset-0 bg-black text-3xl text-center rounded-xl m-4 z-20 overflow-y-auto"
+        style={{
+          outline: "6px solid #0e8616",
+          outlineOffset: "-12px",
+        }}
+      >
         <div className="relative max-w-4xl mx-auto">
           <div className="relative">
             <div className="absolute -top-0 -left-4 w-4 h-4 bg-white"></div>
