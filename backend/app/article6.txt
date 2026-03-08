@@ -1,0 +1,31 @@
+Boeing Is Haunted By Two Decades Of Outsourcing
+
+For 20 years, Boeing has engaged in collaborative product development with a number of suppliers. The outsourced R&D, in turn, supported outsourced manufacturing with over 50 key suppliers. These suppliers, in turn, outsourced various parts of the modules they produced to their suppliers. Historically, Boeing was vertically integrated - the great majority of product development and manufacturing was done in-house. Boeing is now a case study in how not to outsource a supply chain.
+
+Quality issues have recently bedeviled Boeing. On January 5th the mid exit door on the left side of the 737 Max 9 blew off at 16,000 feet during an Alaskan Airlines flight. Rapid decompression then resulted. It was a minor miracle that no one was sucked out of the plane. The flight did not have passengers sitting next to the door that blew off. This was very unusual.
+
+On February 6th, the National Transportation Safety Board released a report saying that missing bolts were the likely cause. Boeing’s stock price fell 16% from January 5th to February 12th. Meanwhile, Airbus, Boeing’s principal competitor, has seen its stock rise nearly 6% in the same time-period.
+
+There have been other incidents. In 2018 and 2019 there were two fatal crashes of the 737 Max 8. These claimed a total of 346 lives and led to a 20-month grounding of the aircraft.
+
+“Unless significant sanctions are imposed due to Boeing’s design and production-quality issues, it is likely that business will continue as usual,” according to Christopher Tang. Dr. Tang is a distinguished professor at the UCLA Anderson School of Management.
+
+Problems are likely to continue, Dr. Tang argues, because the current crisis is hardly unprecedented; it is based on the changes that Boeing made to its R&D and manufacturing processes during the development of the 787 Dreamliner. The Dreamliner program was launched in April of 2004.
+
+"The company aimed to develop the aircraft quickly and inexpensively to compete with the Airbus A380. Instead of developing the aircraft in-house and sourcing parts from suppliers,” Dr. Tang explained, “Boeing decided to outsource 70% of the design, engineering and manufacturing of entire modules to over 50 strategic partners.”
+
+At the time, this program was considered groundbreaking. PLM designer Dassault Systèmes announced at the onset of the program that their software would “comprise Boeing’s Global Collaboration Environment.” It would create a “virtual product development platform” involving Boeing’s key suppliers. This “harmonization” in turn would “improve collaboration, innovation, product quality, time-to-market and return-on-investment.” The Boing contract accelerated the development of collaborative PLM solutions by over a decade.
+
+In 2017, a billion dollar extension contract worth $1 billion and covering 30 years was signed between Boeing and Dassault. Boeing’s chief information officer at that time said that “the decision to adopt Dassault’s platform “is a key milestone in our digital transformation.”
+
+However, an ex-chief executive officer at Boeing said last year that the company needs to undertake “real honest-to-God” product development, or it will lose the skills required to do so.
+
+Advanced software is not a magic wand. “Boeing failed to establish the close supplier relationships that took Toyota decades of effort and commitment to develop. Without close communication and coordination among the partners, Boeing was unable to manage its external development process effectively,” according to Dr. Tang.
+
+Recent investigations have revealed serious production control problems within Boeing’s supply chain operations. On January 30, Boeing indicated that the bolts required to fasten the fuselage panel of an Alaskan Airlines aircraft were missing when the plane left Boeing’s facility. This incident might be because of oversights in documentation and procedures at Boeing’s Renton factory in Washington.
+
+But if Boeing can’t even manage processes in their factories, how good can they be at managing their partner’s manufacturing processes? A failure by Boeing supplier Spirit AeroSystems seems to confirm this suspicion. Spirit AeroSystems manufactures the fuselages of the 737 Max jets. They notified Boeing that two holes may not have been drilled exactly to Boeing’s specifications.
+
+Airbus also uses advanced PLM software to codesign their planes and has also largely outsourced production of key aircraft modules. But in recent years Airbus’s safety history is much better than Boeing’s.
+
+CIO’s commonly say that implementing technology is not enough. Companies need to pay attention to people, process, and technology. There is growing certainty that Boeing is not paying enough attention to their own and their partner’s quality culture and processes.

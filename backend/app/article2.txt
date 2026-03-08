@@ -1,0 +1,25 @@
+Nebraska Is Latest State To Sue Roblox—Accuses Company Of ‘Creating A Playground For Predators’
+
+Topline
+Nebraska joined a growing list of states and families to file a lawsuit against Roblox, the hugely popular online gaming platform, accusing it of failing to protect young users from child predators and implementing allegedly insufficient safety updates.
+
+Key Facts
+Nebraska Attorney General Mike Hilgers announced Wednesday he had filed a lawsuit against Roblox in a state district court, accusing the gaming company of building a “multibillion‑dollar business on the trust of families” while “creating a playground for predators and exposing children to graphic and dangerous content.”
+
+Nebraska’s lawsuit accuses Roblox of allegedly failing to curb contact between minors and adults, making sexually explicit or violent content accessible to children, simulating criminal activity and implementing insufficient parental controls that are allegedly easy to bypass.
+
+Matt Kaufman, Chief Safety Officer for Roblox, told Forbes the company shares Nebraska’s “commitment to keeping kids and teens safe online” and is “disappointed” the state chose to sue, saying the platform takes “swift action against anyone who violates our rules” and cooperates with law enforcement to support investigations.
+
+Kaufman added the platform is “built with safety at its core, and we strengthen our protections every day.”
+
+Nebraska’s lawsuit echoes several other state lawsuits that have been filed against Roblox in recent months, including by the attorneys general of Texas, Florida, Louisiana and Kentucky.
+
+
+What Else Does Nebraska’s Lawsuit Say?
+Nebraska sued Roblox on four counts, accusing it in a nearly 60-page complaint of negligence, fraudulent and negligent misrepresentation, and of violating both Nebraska’s Consumer Protection Act and Uniform Deceptive Trade Practices Act by allegedly falsely advertising Roblox as safe for children. Nebraska’s suit accused Roblox of lacking proper child protection protocols for years, and it said the company’s recent efforts to implement parental controls have been insufficient. The complaint said a November 2024 update restricting chat for minors could be “bypassed by creating an alternate account that identified as a user over 13 years old.” The suit also says a January 2026 update that requires age checks through government ID or facial recognition technology to access features like in-game chat is also insufficient, saying it is not required when a user signs up, meaning users can still use fake birthdays to portray themselves as older. The state accused Roblox of prioritizing growth over safety, citing the platform’s massive userbase, which has exploded to 151.5 million daily active users as of the third quarter of 2025, a 70% increase year-over-year.
+
+How Has Roblox Responded To Lawsuits?
+Roblox says it has implemented various safety features as lawsuits have piled up, including its facial recognition and government ID age checks, which started rolling out in December in select countries and worldwide in January. In a February safety update, Roblox said it is rolling out a redesigned reporting tool for users to flag inappropriate behavior and will update consequences for users who break rules in the game chat. After Texas sued Roblox in November, Roblox said in a statement to Forbes it had already implemented 145 new safety updates in 2025, including Roblox Sentinel, an AI-powered tool designed to identify early signs of child endangerment.
+
+Tangent
+Roblox has faced various lawsuits from families in recent months. In January, families in Washington and Chicago alleged in lawsuits their children were groomed and sexually exploited by adults they met on Roblox. The Los Angeles Times reported in December multiple California families have sued the company, including one family who said a Roblox user tried to coerce their young daughter to meet him alone at his apartment, and another who alleged their child was sexually assaulted by a man the child met on Roblox.

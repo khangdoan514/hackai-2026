@@ -565,11 +565,8 @@ def analyze(paragraph: str, source: str = "unknown", ticker_hint: str = "") -> d
     print(f"   Similar tweets that moved market: {hp['historical_news_rate']:.0%}  "
           f"|  Avg move: {hp['avg_move']:.2f}%  |  Verdict: {hp['pattern_verdict']}")
 
-    # Step 5 — Source credibility
-    print("\nModel 4: Source Credibility")
+    # Step 5 — Source credibility (used internally, not printed)
     cred = source_credibility_score(source)
-    print(f"   Source: '{source}'  |  Credibility: {cred['credibility']:.0%}  "
-          f"|  Tier: {cred['tier']}")
 
     # Step 6 — Score fusion
     print("\nFusing model scores...")
@@ -638,7 +635,6 @@ def save_to_csv(result: dict, csv_path: str):
     hist_rate = result["historical_news_rate"]
     avg_move  = result["avg_historical_move"]
     finbert   = result["sentiment_label"]
-    confidence= result["confidence"]
 
     joke_str = (
         "flagged as a joke/meme by sarcasm classifier"
@@ -646,13 +642,13 @@ def save_to_csv(result: dict, csv_path: str):
         "not flagged as sarcastic"
     )
     hist_str = (
-        f"{hist_rate:.0%} of historically similar incidents caused a market move "
+        f"{hist_rate:.0%} of historically similar tweets caused a market move "
         f"(avg {avg_move:.1f}% price change)"
     )
     sentiment_analysis = (
         f"Verdict: {verdict} | FinBERT: {finbert} | {joke_str}. "
         f"Historical pattern: {hist_str}. "
-        f"Direction signal: {direction} with {confidence:.0%} confidence."
+        f"Direction signal: {direction}."
     )
 
     # Day30 Return: computed from CSV price data for this ticker

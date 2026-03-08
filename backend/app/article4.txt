@@ -1,0 +1,27 @@
+GameStop Euphoria – What’s Happening And Why It Will End
+
+On Monday, January 4, 2021, GameStop stock (“GME”) stood at $17.25 per share. But don’t blink, today it is trading at $319.25 per share (up another $172 per share today alone – January 27, 2021). Here’s what is going on. I’ll do my best to explain it in terms most may better understand.
+
+To gain some simple footing, consider this: GameStop, like Blockbuster before it, sells video games. A generation of young people would crowd the store to buy new and used video games. It was an outstanding business. Since those days, the world has gone online. Click, new download. Like Blockbuster before it, high-speed internet has changed the experience. A month ago, GameStop was an approximate $1 billion company heading to zero according to a number of hedge fund managers who are/were shorting the stock. Today’s it's worth $22 billion.
+
+There are three main buying forces driving up the stock price higher:
+
+Retail investors are buying out of the money call options on GME
+Market makers are forced to buy the stock
+A gigantic short squeeze
+
+Retail investors buying call options:
+
+To translate this into English, the mechanics look like this: Retail investors are buying call options on GME. On Friday, January 22, 2021, GME was trading at $65 per share. An investor, believing the stock will move higher, places an order to buy a call option giving the investor the right to buy the stock at $100 per share. The investor can bet on the stock going above $100 by mid-February, mid-March, mid-April or even longer. The longer you have before the option expires, the higher the cost of the option. You can also buy at different strike levels. Say you want the right to buy the stock at $200 per share or you have a crazy idea to buy the right to buy the stock at $300 per share. Who, after all, would believe a stock trading at $17.25 just three weeks ago could trade at more than $300?
+
+Market Makers:
+
+When the option execution strike price is higher than the current stock price it is known as “out of the money.” When the retail investors buy an out of the money call, or any option for that matter, the market maker who sells the investor the call option has to hedge his/her risk in what is called a delta-adjusted way. Think of it as high level math that takes into consideration how much volatility is happening and other issues. But in short, as the stock price rises, the delta on those options rises, forcing the market maker to buy more of the underlying stock to hedge their risk. (Hat tip to good friend Artie Grizzle, CFA Martello Investments)
+
+Gigantic short squeeze:
+
+What is somewhat unique for GameStop at this point in time is that before the squeeze began, there were more shorts (investors betting the stock will go down in price so they sell the stock with the intention of buying it back later at a lower price – this is known as short selling) on the stock than was outstanding float (the number of shares available for trading of a particular stock). For example, Finviz.com puts the outstanding shares available for trading at 50.65 million and the short float at 140.57% that number. Meaning there are more shares shorted than there are outstanding shares. How can this be you ask? That shouldn’t be allowed to happen. It is naked short selling. This is crazy you say! You are right. Call your regulator. 
+
+At the core of all of this is a retail mob gone wild buying frenzy. Speculation fueled by the speed of social media, forcing market makers to buy more stock and hedge fund managers being squeezed out of their short stock positions. When an investor shorts a stock, there is a required amount of margin that must be posted. At some point, margin calls kick in and brokerages, fearing risk to their balance sheets, will force the short positions to cover. That means they have to buy the shares to cover their short bet.
+
+More buyers than sellers, share prices rise. Until they don’t. There will be the other side of this trade. It begins when the margin calls—forced buying—subsides. It will be aided by the market makers selling of shares as they adjust their delta hedges and it will end in a bad hangover for the few who stayed at the party too long. In the end, the ability of the company to make money and good old fashion fundamentals will win out. I’m not suggesting GameStop will be the next Blockbuster, though that is a real risk. I am simply pointing out the dynamics at play as I too watch in amazement at the magnitude of a billion-dollar market value going to twenty-two billion in a few short weeks. Call it GameStop Euphoria. For now, enjoy the party. I suspect it will end soon.
