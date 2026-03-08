@@ -59,15 +59,15 @@ const PIPELINE = [
 const STACK = [
   { layer: "Frontend", color: "rgba(74,222,128,0.08)", border: "rgba(74,222,128,0.2)", tools: ["React", "Tailwind CSS", "React-Router"] },
   { layer: "Backend", color: "rgba(74,222,128,0.08)", border: "rgba(74,222,128,0.2)", tools: ["FastAPI", "Python", "Uvicorn"] },
-  { layer: "ML", color: "rgba(74,222,128,0.08)", border: "rgba(74,222,128,0.2)", tools: ["XGBoost", "", "OpenAI GPT"] },
-  { layer: "Data", color: "rgba(74,222,128,0.08)", border: "rgba(74,222,128,0.2)", tools: ["IDK", "IDK", "IDK"] },
+  { layer: "ML", color: "rgba(74,222,128,0.08)", border: "rgba(74,222,128,0.2)", tools: ["OpenAI GPT", "XGBoost", "FinBERT"] },
+  { layer: "Data", color: "rgba(74,222,128,0.08)", border: "rgba(74,222,128,0.2)", tools: ["ChromaDB", "CSV Storage", "Yahoo Finance API"] },
 ];
 
 const TEAM = [
-  { name: "Khang", role: "Something", init: "K", desc: "Something" },
-  { name: "Pavan", role: "Something", init: "P", desc: "Something" },
-  { name: "Adya", role: "Something", init: "A", desc: "Something" },
-  { name: "Taylor", role: "Something", init: "T", desc: "Something" },
+  { name: "Khang", role: "Fullstack Developer", init: "K", desc: "I like legos", img: "/team/Khang_Doan.png" },
+  { name: "Pavan", role: "Backend Developer", init: "P", desc: "I like chocolate cake", img: "/team/Pavan_Arani.jpeg" },
+  { name: "Adya", role: "Frontend Developer", init: "A", desc: "I like sleeping", img: "/team/Adya_Dhanasekar.png" },
+  { name: "Taylor", role: "Backend Developer", init: "T", desc: "I like my GF", img: "/team/Taylor.png" },
 ];
 
 const TABS = [
@@ -431,6 +431,18 @@ export default function About() {
               </p>
             </div>
             <div style={{ borderTop: `1px solid ${C.border}` }} />
+            {/* Rectangular image before desc */}
+            <div
+              className="w-full rounded-lg overflow-hidden flex-shrink-0"
+              style={{ height: "350px", border: `1px solid ${C.border}` }}
+            >
+              <img
+                src={member.img}
+                alt={member.name}
+                className="w-full h-full object-cover transition-transform duration-500"
+                style={{ transform: hoveredMember === i ? "scale(1.05)" : "scale(1)" }}
+              />
+            </div>
             <p className="text-[12px]" style={{ color: "rgba(255,255,255,0.5)" }}>
               {member.desc}
             </p>
