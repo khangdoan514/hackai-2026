@@ -4,7 +4,7 @@ export default function Navbar() {
   const location = useLocation()
 
   return (
-    <nav className="px-10 pt-2 pb-20 text-2xl flex items-center justify-between inset-0 rounded-xl transition-all duration-300">
+    <nav className="px-10 pt-3 pb-20 text-2xl flex items-center justify-between inset-0 rounded-xl transition-all duration-300">
       {/* ==================== Navigation Links ==================== */}
       <div className="flex items-center space-x-3 flex-1">
         <Link to="/" className="flex items-center gap-2.5 group">
@@ -48,12 +48,12 @@ export default function Navbar() {
       </div>
 
       <div className="flex-1 flex justify-end">
-        <div className="hidden md:flex items-center space-x-8">
+        <div className="hidden md:flex items-center space-x-8 -mt-2">
           {[
             { path: '/', label: 'Home' },
             { path: '/news', label: 'News' },
             { path: '/finance', label: 'Finance' },
-            { path: '/about', label: 'About' }
+            { path: '/about', label: 'About' },
           ].map((item) => {
             const isActive = location.pathname === item.path || (item.path === '/' && location.pathname === '/home')
             return (

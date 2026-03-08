@@ -97,9 +97,13 @@ def main():
         analyzer.print_debug(rec)
         all_rows.extend(analyzer.analyze(rec))
 
-    with open(args.csv_out,"w",newline="",encoding="utf-8") as f:
+    file_exists = os.path.exists(args.csv_out)
+
+    with open(args.csv_out,"a",newline="",encoding="utf-8") as f:
         w = csv_mod.DictWriter(f, fieldnames=analyzer.FIELDS)
-        w.writeheader()
+        if not file_exists:
+            w.writeheader()
+        w = csv_mod.DictWriter(f, fieldnames=analyzer.FIELDS)
         w.writerows(all_rows)
 
     print(f"CSV saved -> {args.csv_out}  ({len(all_rows)} row(s))")

@@ -1,11 +1,14 @@
 from fastapi import FastAPI, Query, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
 from openai import AsyncOpenAI, OpenAI # type: ignore
 from app.config import settings
 from datetime import datetime, timezone
+from pathlib import Path
 from pydantic import BaseModel
 import uvicorn
 import os
+import csv
 import asyncio
 import requests
 import json
@@ -24,7 +27,7 @@ url = "https://newsapi.org/v2/everything"
 if not ai_api_key or not news_api_key:
     raise ValueError("API Key Missing")
 
-client = OpenAI(api_key=ai_api_key)
+client = AsyncOpenAI(api_key=ai_api_key)
 
 # CORS
 app.add_middleware(
@@ -57,6 +60,43 @@ async def main():
     
 class ChatRequest(BaseModel):
     prompt: str
+    
+@app.get("/api/news-data")
+async def get_news_data():
+    # Path to your JSON file
+    json_path = Path(__file__).parent.parent / "ranked_news_20260308_052450.json"
+    
+    with open(json_path, 'r') as f:
+        data = json.load(f)
+    
+    return JSONResponse(content=data)
+
+@app.get("/api/analysis-results")
+async def get_analysis_results():
+    csv_path = Path(__file__).parent / "analysis_results.csv"
+    results = []
+    with open(csv_path, 'r') as f:
+        reader = csv.DictReader(f)
+        for row in reader:
+            sentiment_raw = row.get("sentiment", "")
+            parts = sentiment_raw.split()
+            sent_dir = parts[0].split("/") if parts else ["UNKNOWN", "UNKNOWN"]
+            conf = int(parts[1].replace("conf=", "").replace("%", "")) if len(parts) > 1 else 0
+            irony = float(parts[2].replace("irony=", "")) if len(parts) > 2 else 0.0
+            pattern = parts[3].replace("pat=", "") if len(parts) > 3 else "UNKNOWN"
+
+            results.append({
+                "company": row["company"],
+                "price": row["current_stock_price"],
+                "ceo": row["ceo"],
+                "sentiment": sent_dir[0] if len(sent_dir) > 0 else "UNKNOWN",
+                "direction": sent_dir[1] if len(sent_dir) > 1 else "UNKNOWN",
+                "conf": conf,
+                "irony": irony,
+                "pattern": pattern,
+                "return30d": float(row["30d_return"]) if row["30d_return"] not in ("N/A", "") else 0.0,
+            })
+    return JSONResponse(content=results)
 
 @app.post("/chat")
 async def chat(request: ChatRequest):

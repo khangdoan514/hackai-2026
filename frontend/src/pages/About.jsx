@@ -11,12 +11,42 @@ const C = {
 };
 
 const STORY = [
-  { title: "The Observation", tag: "Origin", desc: "We noticed a pattern: CEOs say something stupid, stock drops, media frenzy, the market overreacts — every single time." },
-  { title: "The Insight", tag: "Signal", desc: "Controversies aren't just headlines. They create temporary inefficiencies that most investors miss because they're reacting emotionally, not systematically." },
-  { title: "The Inspiration", tag: "Papa John", desc: "One afternoon, one hot mic, decades of brand equity gone. Papa John's CEO proved that a single moment of poor judgment could move markets." },
-  { title: "The Problem", tag: "Obstacle", desc: "Every major business publication blocked our scrapers. Building a reliable controversy dataset felt impossible — until we found a workaround." },
-  { title: "The Breakthrough", tag: "Solution", desc: "Routing through the Wayback Machine let us reconstruct article timelines, bypass blocks, and build a real historical dataset for training." },
-  { title: "The Result", tag: "Outcome", desc: "PapaQuant transforms messy, emotional news headlines into structured, model-backed trading signals — buy the dip or short before the market catches up." },
+  { 
+    title: "The Observation", 
+    tag: "Origin", 
+    desc: "We noticed a pattern: CEOs say something stupid, stock drops, media frenzy, the market overreacts — every single time.",
+    image: "https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2340&q=80"
+  },
+  { 
+    title: "The Insight", 
+    tag: "Signal", 
+    desc: "Controversies aren't just headlines. They create temporary inefficiencies that most investors miss because they're reacting emotionally, not systematically.",
+    image: "https://i0.wp.com/freegiftfromgod.com/wp-content/uploads/2023/07/The-trouble-with-controversies.png?ssl=1"
+  },
+  { 
+    title: "The Inspiration", 
+    tag: "Papa John", 
+    desc: "One afternoon, one hot mic, decades of brand equity gone. Papa John's CEO proved that a single moment of poor judgment could move markets.",
+    image: "https://a57.foxnews.com/static.foxbusiness.com/foxbusiness.com/content/uploads/2020/09/1440/810/GettyImages-john-schnatter-.jpg?ve=1&tl=1"
+  },
+  { 
+    title: "The Problem", 
+    tag: "Obstacle", 
+    desc: "Every major business publication blocked our scrapers. Building a reliable controversy dataset felt impossible — until we found a workaround.",
+    image: "https://decodo.com/cdn-cgi/image/width=1280,quality=70,format=auto/https://images.decodo.com/How_to_Scrape_Google_Without_Getting_Blocked_37f12fb1ff/How_to_Scrape_Google_Without_Getting_Blocked_37f12fb1ff.png"
+  },
+  { 
+    title: "The Breakthrough", 
+    tag: "Solution", 
+    desc: "Routing through the Wayback Machine let us reconstruct article timelines, bypass blocks, and build a real historical dataset for training.",
+    image: "https://static0.makeuseofimages.com/wordpress/wp-content/uploads/wm/2024/05/internet-archive-wayback-machine-website-photo.jpg?q=70&fit=crop&w=1600&h=1100&dpr=1"
+  },
+  { 
+    title: "The Result", 
+    tag: "Outcome", 
+    desc: "PapaQuant transforms messy, emotional news headlines into structured, model-backed trading signals — buy the dip or short before the market catches up.",
+    image: "https://i0.wp.com/scheplick.com/wp-content/uploads/2021/03/buy-the-dip-picture-btfd-1.jpeg?resize=2146%2C1370&ssl=1"
+  },
 ];
 
 const PIPELINE = [
@@ -29,15 +59,15 @@ const PIPELINE = [
 const STACK = [
   { layer: "Frontend", color: "rgba(74,222,128,0.08)", border: "rgba(74,222,128,0.2)", tools: ["React", "Tailwind CSS", "React-Router"] },
   { layer: "Backend", color: "rgba(74,222,128,0.08)", border: "rgba(74,222,128,0.2)", tools: ["FastAPI", "Python", "Uvicorn"] },
-  { layer: "ML", color: "rgba(74,222,128,0.08)", border: "rgba(74,222,128,0.2)", tools: ["XGBoost", "", "OpenAI GPT"] },
-  { layer: "Data", color: "rgba(74,222,128,0.08)", border: "rgba(74,222,128,0.2)", tools: ["IDK", "IDK", "IDK"] },
+  { layer: "ML", color: "rgba(74,222,128,0.08)", border: "rgba(74,222,128,0.2)", tools: ["OpenAI GPT", "XGBoost", "FinBERT"] },
+  { layer: "Data", color: "rgba(74,222,128,0.08)", border: "rgba(74,222,128,0.2)", tools: ["ChromaDB", "CSV Storage", "Yahoo Finance API"] },
 ];
 
 const TEAM = [
-  { name: "Khang", role: "Something", init: "K", desc: "Something" },
-  { name: "Pavan", role: "Something", init: "P", desc: "Something" },
-  { name: "Adya", role: "Something", init: "A", desc: "Something" },
-  { name: "Taylor", role: "Something", init: "T", desc: "Something" },
+  { name: "Khang", role: "Fullstack Developer", init: "K", desc: "I like legos", img: "/team/Khang_Doan.png" },
+  { name: "Pavan", role: "Backend Developer", init: "P", desc: "I like chocolate cake", img: "/team/Pavan_Arani.jpeg" },
+  { name: "Adya", role: "Frontend Developer", init: "A", desc: "I like sleeping", img: "/team/Adya_Dhanasekar.png" },
+  { name: "Taylor", role: "Backend Developer", init: "T", desc: "I like my GF", img: "/team/Taylor.png" },
 ];
 
 const TABS = [
@@ -47,20 +77,155 @@ const TABS = [
   { id: "team", label: "Team" },
 ];
 
-const STATS = [
-  { value: "1,284", label: "Controversies" },
-  { value: "87.3%", label: "Accuracy" },
-  { value: "4", label: "Engineers" },
-  { value: "24h", label: "Build Time" },
-];
+// Story Slider Component
+function StorySlider({ stories, currentIndex, onNext, onPrev }) {
+  const currentStory = stories[currentIndex];
+  
+  return (
+    <div className="col-span-4 grid grid-cols-2 gap-6 h-full">
+      <div 
+        className="rounded-xl overflow-hidden relative"
+        style={{
+          background: C.cardBg,
+          border: `1px solid ${C.border}`,
+          boxShadow: "0 20px 40px rgba(0,0,0,0.4)",
+        }}
+      >
+        <img 
+          src={currentStory.image} 
+          alt={currentStory.title}
+          className="w-full h-full object-cover"
+        />
+        
+        <button
+          onClick={onPrev}
+          className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full flex items-center justify-center transition-all duration-200 hover:scale-110"
+          style={{
+            background: "rgba(0,0,0,0.6)",
+            border: `1px solid ${C.borderHover}`,
+            color: "#fff",
+            backdropFilter: "blur(4px)",
+          }}
+          onMouseEnter={e => e.currentTarget.style.background = "rgba(74,222,128,0.2)"}
+          onMouseLeave={e => e.currentTarget.style.background = "rgba(0,0,0,0.6)"}
+        >
+          ←
+        </button>
+        <button
+          onClick={onNext}
+          className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full flex items-center justify-center transition-all duration-200 hover:scale-110"
+          style={{
+            background: "rgba(0,0,0,0.6)",
+            border: `1px solid ${C.borderHover}`,
+            color: "#fff",
+            backdropFilter: "blur(4px)",
+          }}
+          onMouseEnter={e => e.currentTarget.style.background = "rgba(74,222,128,0.2)"}
+          onMouseLeave={e => e.currentTarget.style.background = "rgba(0,0,0,0.6)"}
+        >
+          →
+        </button>
+        
+        <div 
+          className="absolute bottom-4 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full text-[11px]"
+          style={{
+            background: "rgba(0,0,0,0.6)",
+            border: `1px solid ${C.borderHover}`,
+            color: "#fff",
+            backdropFilter: "blur(4px)",
+          }}
+        >
+          {currentIndex + 1} / {stories.length}
+        </div>
+      </div>
+
+      <div 
+        className="rounded-xl p-8 flex flex-col justify-center relative"
+        style={{
+          background: C.cardBg,
+          border: `1px solid ${C.borderHover}`,
+          boxShadow: "0 20px 60px rgba(0,0,0,0.5)",
+        }}
+      >
+        {/* Tag */}
+        <div
+          className="text-[11px] px-3 py-1.5 rounded-md w-fit mb-6"
+          style={{ 
+            background: "rgba(74,222,128,0.1)", 
+            color: C.green, 
+            border: "1px solid rgba(74,222,128,0.3)" 
+          }}
+        >
+          {currentStory.tag}
+        </div>
+
+        {/* Title */}
+        <h2 className="text-[32px] font-bold text-white mb-4 leading-tight">
+          {currentStory.title}
+        </h2>
+
+        {/* Description */}
+        <p 
+          className="text-[15px] leading-relaxed mb-16"
+          style={{ color: "rgba(255,255,255,0.7)" }}
+        >
+          {currentStory.desc}
+        </p>
+
+        {/* Progress bar */}
+        <div className="space-y-2">
+          <div className="flex justify-between text-[11px]">
+            <span style={{ color: C.textMuted }}>Story Progress</span>
+            <span style={{ color: C.green }}>{currentIndex + 1}/{stories.length}</span>
+          </div>
+          <div 
+            className="w-full h-1 rounded-full overflow-hidden"
+            style={{ background: "rgba(255,255,255,0.1)" }}
+          >
+            <div 
+              className="h-full rounded-full transition-all duration-300"
+              style={{ 
+                width: `${((currentIndex + 1) / stories.length) * 100}%`,
+                background: C.green 
+              }}
+            />
+          </div>
+        </div>
+
+        {/* Bottom navigation dots */}
+        <div className="flex gap-2 mt-6">
+          {stories.map((_, i) => (
+            <button
+              key={i}
+              onClick={() => onNext(i)} // You'll need to modify this to handle direct index selection
+              className="h-1.5 rounded-full transition-all duration-300"
+              style={{
+                width: i === currentIndex ? "24px" : "8px",
+                background: i === currentIndex ? C.green : "rgba(255,255,255,0.2)",
+              }}
+            />
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
 
 export default function About() {
   const [activeTab, setActiveTab] = useState("story");
-  const [expandedStory, setExpandedStory] = useState(null);
+  const [currentStoryIndex, setCurrentStoryIndex] = useState(0);
   const [hoveredMember, setHoveredMember] = useState(null);
   const [hoveredStack, setHoveredStack] = useState(null);
   const [expandedPipe, setExpandedPipe] = useState(null);
   const navigate = useNavigate();
+
+  const handleNextStory = () => {
+    setCurrentStoryIndex((prev) => (prev + 1) % STORY.length);
+  };
+
+  const handlePrevStory = () => {
+    setCurrentStoryIndex((prev) => (prev - 1 + STORY.length) % STORY.length);
+  };
 
   const cardHover = (e) => {
     e.currentTarget.style.transform = "translateY(-6px)";
@@ -88,7 +253,7 @@ export default function About() {
         </div>
         <div className="flex items-center gap-3">
           <button
-            onClick={() => navigate("/play")}
+            onClick={() => navigate("/news")}
             className="px-4 py-2 text-[12px] font-semibold rounded-lg ml-1"
             style={{ background: C.green, color: "#000" }}
             onMouseEnter={e => { e.currentTarget.style.opacity = "0.85"; }}
@@ -108,7 +273,7 @@ export default function About() {
           <button
             key={id}
             onClick={() => setActiveTab(id)}
-            className="px-4 py-2 text-[12px] rounded-lg transition-all duration-200"
+            className="px-4 py-2 text-[14px] rounded-lg transition-all duration-200"
             style={{
               background: activeTab === id ? "rgba(255,255,255,0.08)" : "transparent",
               color: activeTab === id ? "#fff" : C.textMuted,
@@ -123,59 +288,15 @@ export default function About() {
       {/* Content */}
       <div className="flex-1 grid grid-cols-4 gap-4">
 
-        {/* STORY */}
-        {activeTab === "story" && STORY.map((item, i) => {
-          const expanded = expandedStory === i;
-          return (
-            <div
-              key={i}
-              className="rounded-xl p-6 flex flex-col justify-between transition-all duration-300 cursor-pointer"
-              style={{
-                background: C.cardBg,
-                border: `1px solid ${expanded ? C.green : C.border}`,
-                gridColumn: expanded ? "span 2" : "span 1",
-                boxShadow: expanded ? "0 20px 60px rgba(0,0,0,0.5)" : "none",
-                transform: expanded ? "translateY(-2px)" : "translateY(0)",
-              }}
-              onClick={() => setExpandedStory(expanded ? null : i)}
-              onMouseEnter={e => { if (!expanded) cardHover(e); }}
-              onMouseLeave={e => { if (!expanded) cardLeave(e); }}
-            >
-              <div>
-                <div className="flex items-center justify-between mb-3">
-                  <div
-                    className="text-[10px] px-2 py-1 rounded-md w-fit"
-                    style={{ background: "rgba(74,222,128,0.1)", color: C.green, border: "1px solid rgba(74,222,128,0.3)" }}
-                  >
-                    {item.tag}
-                  </div>
-                  <span className="text-[10px]" style={{ color: "rgba(255,255,255,0.2)" }}>
-                    {expanded ? "Click to collapse" : "Click to expand"}
-                  </span>
-                </div>
-                <p className="text-[18px] font-bold text-white mb-2">{item.title}</p>
-                <p
-                  className="text-[12px]"
-                  style={{
-                    color: "rgba(255,255,255,0.65)",
-                    maxHeight: expanded ? "200px" : "60px",
-                    overflow: "hidden",
-                    transition: "max-height 0.3s ease",
-                  }}
-                >
-                  {item.desc}
-                </p>
-              </div>
-              {expanded && (
-                <div className="mt-4 pt-3" style={{ borderTop: `1px solid ${C.border}` }}>
-                  <p className="text-[10px] uppercase tracking-[0.15em]" style={{ color: C.green }}>
-                    {i + 1} of {STORY.length} — {item.tag}
-                  </p>
-                </div>
-              )}
-            </div>
-          );
-        })}
+        {/* STORY - Slider View */}
+        {activeTab === "story" && (
+          <StorySlider 
+            stories={STORY}
+            currentIndex={currentStoryIndex}
+            onNext={handleNextStory}
+            onPrev={handlePrevStory}
+          />
+        )}
 
         {/* PIPELINE */}
         {activeTab === "pipeline" && PIPELINE.map((item, i) => {
@@ -237,7 +358,7 @@ export default function About() {
         {activeTab === "stack" && STACK.map((item, i) => (
           <div
             key={item.layer}
-            className="rounded-xl p-6 flex flex-col gap-4 transition-all duration-300"
+            className="rounded-xl overflow-hidden flex flex-col transition-all duration-300"
             style={{
               background: C.cardBg,
               border: `1px solid ${hoveredStack === i ? item.border : C.border}`,
@@ -247,30 +368,29 @@ export default function About() {
             onMouseEnter={() => setHoveredStack(i)}
             onMouseLeave={() => setHoveredStack(null)}
           >
-            <div
-              className="w-10 h-10 rounded-lg flex items-center justify-center text-[11px] font-bold uppercase tracking-wider"
-              style={{
-                background: hoveredStack === i ? item.color : "rgba(255,255,255,0.04)",
-                border: `1px solid ${hoveredStack === i ? item.border : C.border}`,
-                color: hoveredStack === i ? "#fff" : C.textMuted,
-              }}
-            >
-              {item.layer.slice(0, 2)}
+            {/* Layer name */}
+            <div className="px-4 pt-4 pb-2">
+              <p className="text-[15px] font-bold text-white">{item.layer}</p>
             </div>
-            <p className="text-[18px] font-bold text-white">{item.layer}</p>
-            <div className="flex flex-wrap gap-2">
+
+            {/* Tool blocks stacked */}
+            <div className="flex flex-col gap-3 px-16 pb-4">
               {item.tools.map(t => (
-                <span
+                <div
                   key={t}
-                  className="text-[11px] px-3 py-1 rounded-md"
+                  className="w-full h-14 rounded-lg flex items-center px-4"
                   style={{
                     background: hoveredStack === i ? item.color : C.innerBg,
                     border: `1px solid ${hoveredStack === i ? item.border : C.border}`,
-                    color: hoveredStack === i ? "#fff" : "rgba(255,255,255,0.6)",
                   }}
                 >
-                  {t}
-                </span>
+                  <span
+                    className="text-[12px] font-medium"
+                    style={{ color: hoveredStack === i ? "#fff" : "rgba(255,255,255,0.6)" }}
+                  >
+                    {t}
+                  </span>
+                </div>
               ))}
             </div>
           </div>
@@ -310,6 +430,18 @@ export default function About() {
               </p>
             </div>
             <div style={{ borderTop: `1px solid ${C.border}` }} />
+            {/* Rectangular image before desc */}
+            <div
+              className="w-full rounded-lg overflow-hidden flex-shrink-0"
+              style={{ height: "350px", border: `1px solid ${C.border}` }}
+            >
+              <img
+                src={member.img}
+                alt={member.name}
+                className="w-full h-full object-cover transition-transform duration-500"
+                style={{ transform: hoveredMember === i ? "scale(1.05)" : "scale(1)" }}
+              />
+            </div>
             <p className="text-[12px]" style={{ color: "rgba(255,255,255,0.5)" }}>
               {member.desc}
             </p>

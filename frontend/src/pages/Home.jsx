@@ -30,7 +30,7 @@ export default function Home() {
 
       {/* Ticker label */}
       <div
-        className="text-[11px] font-bold tracking-[0.3em] uppercase mb-8"
+        className="text-[13px] font-bold tracking-[0.3em] uppercase mb-8"
         style={{ color: "#6AD972", fontFamily: "'Space Mono', monospace" }}
       >
         ▶ FINANCIAL_INTELLIGENCE_v2.0 // LIVE
