@@ -19,13 +19,7 @@ export default function App() {
       >
         <div className="relative max-w-4xl mx-auto">
           <div className="relative">
-            <div className="absolute -top-0 -left-4 w-4 h-4 bg-white"></div>
-            <div className="absolute -top-0 -left-4 w-4 h-4 bg-black rounded-tr-full"></div>
-
-            <div className="absolute -top-0 -right-4 w-4 h-4 bg-white"></div>
-            <div className="absolute -top-0 -right-4 w-4 h-4 bg-black rounded-tl-full"></div>
-
-            <div className="bg-white rounded-b-xl relative z-20">
+            <div className="relative z-20">
               <NavBar />
             </div>
           </div>

@@ -1,0 +1,29 @@
+.custom-side-borders {
+  position: relative;
+  border-bottom: 2px solid #10b981; /* primary-green */
+  /* border-top is removed with border-t-0 */
+}
+
+.custom-side-borders::before,
+.custom-side-borders::after {
+  content: '';
+  position: absolute;
+  width: 2px;
+  background-color: #10b981; /* primary-green */
+}
+
+.custom-side-borders::before {
+  /* Left border - control height here */
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 60px; /* Customize this value */
+}
+
+.custom-side-borders::after {
+  /* Right border - control height here */
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 60px; /* Customize this value */
+}

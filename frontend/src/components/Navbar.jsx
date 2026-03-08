@@ -4,14 +4,14 @@ export default function Navbar() {
   const location = useLocation()
 
   return (
-    <nav className="px-15 pt-1 pb-4 text-2xl flex items-center justify-between inset-0 rounded-xl transition-all duration-300">
+    <nav className="px-15 pt-3 pb-20 text-2xl flex items-center justify-between inset-0 rounded-xl transition-all duration-300">
       {/* ==================== Navigation Links ==================== */}
       <div className="flex items-center space-x-3 flex-1">
         <Link
           to="/"
           className="font-bold hover:opacity-80 transition-opacity"
         >
-          <span className="bg-gradient-to-b from-primary-black to-primary-black bg-clip-text">PapaQuant</span>
+          <span className="text-white bg-clip-text">PapaQuant</span>
         </Link>
       </div>
 
@@ -28,8 +28,8 @@ export default function Navbar() {
               <Link
                 key={item.path}
                 to={item.path}
-                className={`${isActive ? 'text-black' : 'text-black/50'
-                } hover:text-black font-bold transition-colors duration-200 text-base relative group px-1 py-2`}
+                className={`${isActive ? 'text-white' : 'text-white/50'
+                } hover:text-white font-bold transition-colors duration-200 text-base relative group px-1 py-2`}
               >
                 {item.label}
 
