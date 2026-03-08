@@ -1,4 +1,5 @@
 import { useState } from "react";
+import RANKED_NEWS_DATA from "../backend/ranked_news_20260308_052450.json";
 
 const C = {
   green: "var(--color-c-green)",
@@ -9,16 +10,34 @@ const C = {
   borderHover: "var(--color-c-border-hover)",
 };
 
-const MOCK_NEWS = [
-  { source: "Bloomberg", time: "2m ago", ticker: "TSLA", tag: "SELL", tagColor: "#f87171", headline: "Elon Musk faces SEC probe over leaked earnings call remarks made on X" },
-  { source: "Reuters", time: "14m ago", ticker: "MCD", tag: "SELL", tagColor: "#f87171", headline: "McDonald's faces class action over E. Coli outbreak across 13 states" },
-  { source: "Forbes", time: "31m ago", ticker: "NVDA", tag: "BUY", tagColor: "#4ade80", headline: "NVIDIA CEO Jensen Huang announces surprise partnership with Saudi Aramco for AI infrastructure" },
-  { source: "WSJ", time: "1h ago", ticker: "META", tag: "SELL", tagColor: "#f87171", headline: "Meta sued by coalition of 33 state AGs over addictive design targeting minors" },
-  { source: "CNBC", time: "1h ago", ticker: "AAPL", tag: "BUY", tagColor: "#4ade80", headline: "Apple beats Q4 estimates by 18%, Tim Cook signals record buyback program" },
-  { source: "FT", time: "2h ago", ticker: "AMZN", tag: "BUY", tagColor: "#4ade80", headline: "Amazon secures $10B Pentagon cloud deal in final round of JEDI rebid" },
-  { source: "Axios", time: "3h ago", ticker: "PZZA", tag: "SELL", tagColor: "#f87171", headline: "Papa John's CEO caught on hot mic mocking franchise owners at investor day" },
-  { source: "Insider", time: "4h ago", ticker: "NFLX", tag: "BUY", tagColor: "#4ade80", headline: "Netflix adds 9M subscribers in Q3, ad-supported tier surpasses 40M monthly users" },
-];
+function timeAgo(isoDate) {
+  const now = new Date();
+  const then = new Date(isoDate);
+  const diffMs = now - then;
+  const diffMins = Math.floor(diffMs / 60000);
+  if (diffMins < 60) return `${diffMins}m ago`;
+  const diffHours = Math.floor(diffMins / 60);
+  if (diffHours < 24) return `${diffHours}h ago`;
+  const diffDays = Math.floor(diffHours / 24);
+  return `${diffDays}d ago`;
+}
+
+const LIVE_NEWS = RANKED_NEWS_DATA.ranked_articles.map((item) => {
+  const score = item.analysis.controversy_score;
+  const tickers = item.analysis.ticker_tags;
+  const isBuy = score < 0.8;
+  return {
+    source: item.article.source,
+    time: timeAgo(item.article.publishedAt),
+    ticker: tickers.length > 0 ? tickers[0] : "—",
+    tag: isBuy ? "BUY" : "SELL",
+    tagColor: isBuy ? "#4ade80" : "#f87171",
+    headline: item.article.title,
+    excerpt: item.analysis.controversial_excerpt,
+    score: score,
+    url: item.article.url,
+  };
+});
 
 export default function News() {
   const [prompt, setPrompt] = useState("");
@@ -48,6 +67,8 @@ export default function News() {
     }
   };
 
+  const top = RANKED_NEWS_DATA.top_controversy;
+
   return (
     <div
       className="fixed inset-0 flex flex-col px-8 pt-20 pb-6 gap-4 m-15"
@@ -61,6 +82,19 @@ export default function News() {
           <h1 className="text-[26px] font-bold text-white tracking-tight">News</h1>
           <p className="text-[10px] uppercase tracking-[0.2em] mt-2" style={{ color: C.textMuted }}>Scandal Analyzer</p>
         </div>
+        <div
+          className="flex flex-col gap-1 px-3 py-2 rounded-xl max-w-xs"
+          style={{ background: "rgba(248,113,113,0.07)", border: "1px solid rgba(248,113,113,0.2)" }}
+        >
+          <div className="flex items-center gap-1.5">
+            <span className="text-[9px] font-bold uppercase tracking-widest" style={{ color: "#f87171" }}>🔥 Top Controversy</span>
+            <span className="text-[9px] font-semibold px-1.5 py-0.5 rounded" style={{ background: "rgba(248,113,113,0.15)", color: "#f87171" }}>
+              {top.analysis.ticker_tags.join(", ") || "—"}
+            </span>
+            <span className="text-[9px]" style={{ color: C.textMuted }}>Score: {top.analysis.controversy_score}</span>
+          </div>
+          <p className="text-[10px] leading-snug" style={{ color: "rgba(255,255,255,0.7)" }}>{top.article.title}</p>
+        </div>
       </div>
 
       {/* Divider */}
@@ -72,9 +106,12 @@ export default function News() {
         {/* COL 1 — Live News Feed */}
         <div className="flex justify-start flex-col min-h-0">
           <div className="mb-2.5 flex-shrink-0">
-            <div className="flex gap-1.5">
-              <div className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
-              <span className="text-[12px] font-medium uppercase tracking-widest" style={{ color: C.textMuted }}>Live</span>
+            <div className="flex items-center justify-between">
+              <div className="flex gap-1.5 items-center">
+                <div className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
+                <span className="text-[12px] font-medium uppercase tracking-widest" style={{ color: C.textMuted }}>Live</span>
+              </div>
+              <span className="text-[10px]" style={{ color: C.textMuted }}>{RANKED_NEWS_DATA.article_count} articles</span>
             </div>
           </div>
           <div
@@ -82,7 +119,7 @@ export default function News() {
             style={{ border: `1px solid ${C.border}` }}
           >
             <div className="flex-1 overflow-y-auto" style={{ scrollbarWidth: "none" }}>
-              {MOCK_NEWS.map((item, i) => (
+              {LIVE_NEWS.map((item, i) => (
                 <div
                   key={i}
                   className="px-4 py-3 cursor-pointer transition-all duration-150"
@@ -112,6 +149,7 @@ export default function News() {
                       >
                         {item.tag}
                       </span>
+                      <span className="text-[10px]" style={{ color: C.textMuted }}>{item.score.toFixed(2)}</span>
                       <span className="text-[12px]" style={{ color: C.textMuted }}>{item.time}</span>
                     </div>
                   </div>
@@ -128,7 +166,6 @@ export default function News() {
         <div className="flex flex-col gap-3 min-h-0">
           <p className="text-[24px] font-semibold text-white flex-shrink-0">Analyzer</p>
 
-          {/* Input */}
           <div className="rounded-xl p-4 flex flex-col gap-3 flex-shrink-0" style={{ background: C.cardBg, border: `1px solid ${C.border}` }}>
             <div>
               <p className="text-[11px] font-medium text-white mb-0.5">Headline or controversy</p>
@@ -167,7 +204,6 @@ export default function News() {
             </button>
           </div>
 
-          {/* Response */}
           <div
             className="rounded-xl overflow-hidden flex flex-col flex-1 min-h-0"
             style={{ border: `1px solid ${C.border}` }}
@@ -213,11 +249,10 @@ export default function News() {
           </div>
         </div>
 
-        {/* COL 3 — Pipeline + Examples */}
+        {/* COL 3 — Pipeline + Quick Examples */}
         <div className="flex flex-col gap-3 min-h-0">
           <p className="text-[12px] font-semibold text-white flex-shrink-0">How It Works</p>
 
-          {/* Pipeline */}
           <div className="flex flex-col gap-2 flex-shrink-0">
             {[
               { step: "01", label: "Scrape", desc: "Monitors Forbes, WSJ, Bloomberg and Wayback Machine for CEO controversies" },
@@ -235,19 +270,13 @@ export default function News() {
             ))}
           </div>
 
-          {/* Quick picks */}
           <div className="flex-1 rounded-xl p-4 flex flex-col gap-2 min-h-0 overflow-hidden" style={{ background: C.cardBg, border: `1px solid ${C.border}` }}>
             <p className="text-[11px] font-semibold text-white mb-1 flex-shrink-0">Quick Examples</p>
             <div className="flex flex-col gap-1.5 overflow-y-auto" style={{ scrollbarWidth: "none" }}>
-              {[
-                "Papa John's CEO uses racial slur on conference call",
-                "Tesla CEO tweets 'funding secured' for buyout",
-                "McDonald's E. Coli outbreak linked to Quarter Pounder",
-                "Meta sued by 33 states over Instagram addiction",
-              ].map((ex) => (
+              {LIVE_NEWS.slice(0, 5).map((item) => (
                 <button
-                  key={ex}
-                  onClick={() => setPrompt(ex)}
+                  key={item.headline}
+                  onClick={() => setPrompt(item.headline)}
                   className="text-left text-[10px] px-3 py-2 rounded-lg w-full transition-all duration-150"
                   style={{
                     background: C.innerBg,
@@ -258,7 +287,8 @@ export default function News() {
                   onMouseEnter={e => { e.currentTarget.style.color = "#fff"; e.currentTarget.style.borderColor = C.borderHover; e.currentTarget.style.background = "rgba(255,255,255,0.06)"; }}
                   onMouseLeave={e => { e.currentTarget.style.color = C.textMuted; e.currentTarget.style.borderColor = C.border; e.currentTarget.style.background = C.innerBg; }}
                 >
-                  {ex}
+                  <span style={{ color: item.tagColor, marginRight: 4 }}>{item.ticker}</span>
+                  {item.headline}
                 </button>
               ))}
             </div>

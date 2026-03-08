@@ -3,6 +3,7 @@ import About from "./pages/About.jsx"
 import News from "./pages/News.jsx"
 import Finance from "./pages/Finance.jsx"
 import Home from "./pages/Home.jsx"
+import ImageSlider from "./pages/ImageSlider.jsx"
 import { Routes, Route } from "react-router-dom"
 import './App.css'
 
@@ -36,6 +37,7 @@ export default function App() {
             <Route path="/news" element={ <News /> } />
             <Route path="/finance" element={ <Finance /> } />
             <Route path="/about" element={ <About /> } />
+            <Route path="/slider" element={ <ImageSlider /> } />
           </Routes>
         </div>
       </div>

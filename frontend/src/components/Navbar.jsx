@@ -53,7 +53,8 @@ export default function Navbar() {
             { path: '/', label: 'Home' },
             { path: '/news', label: 'News' },
             { path: '/finance', label: 'Finance' },
-            { path: '/about', label: 'About' }
+            { path: '/about', label: 'About' },
+            { path: '/slider', label: 'Slider' }
           ].map((item) => {
             const isActive = location.pathname === item.path || (item.path === '/' && location.pathname === '/home')
             return (
