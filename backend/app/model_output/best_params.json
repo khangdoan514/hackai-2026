@@ -1,0 +1,32 @@
+{
+  "best_cv_accuracy": 0.7916666666666666,
+  "best_params": {
+    "n_estimators": 79,
+    "max_depth": 8,
+    "learning_rate": 0.24659691172104828,
+    "subsample": 0.9041986740582306,
+    "colsample_bytree": 0.6523068845866853,
+    "min_child_weight": 1,
+    "reg_alpha": 0.2637333993381525,
+    "reg_lambda": 0.015876781526923997,
+    "use_label_encoder": false,
+    "eval_metric": "logloss",
+    "random_state": 42,
+    "verbosity": 0
+  },
+  "feature_names": [
+    "stock_price",
+    "day30_return",
+    "polarity",
+    "market_impact",
+    "conf",
+    "irony",
+    "pattern_risk",
+    "company_enc",
+    "ceo_enc"
+  ],
+  "label_classes": [
+    "growth",
+    "reduction"
+  ]
+}

@@ -11,3 +11,7 @@ bs4==0.0.2
 newspaper3k==0.2.8
 chromadb==1.5.2
 scikit-learn==1.7.2
+vaderSentiment==
+yfinance==
+xgboost==
+optuna==

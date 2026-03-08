@@ -1,4 +1,2 @@
-Company,Current Stock Price,CEO,Sentiment Analysis,Direction,Day30 Return
-Tesla Inc.,$268.21 (2022-09-29),Elon Musk,Verdict: MIXED | FinBERT: NEUTRAL | not flagged as sarcastic. Historical pattern: 0% of historically similar tweets caused a market move (avg 0.6% price change). Direction signal: SIDEWAYS with 50% confidence.,SIDEWAYS,+37.1% (2021-09-30 to 2021-11-11)
-Tesla Inc.,$268.21 (2022-09-29),Elon Musk,Verdict: MIXED | FinBERT: NEUTRAL | not flagged as sarcastic. Historical pattern: 0% of historically similar tweets caused a market move (avg 0.6% price change). Direction signal: DOWN with 50% confidence.,DOWN,+37.1% (2021-09-30 to 2021-11-11)
-Papa Johns,$51.04 (2018-06-11),John Schnatter, Verdict: MIXED | FinBERT: NEUTRAL | not flagged as sarcastic. Historical pattern: 40% of historically similar tweets caused a market move (avg 2.6% price change). Direction signal: UP with 50% confidence.,UP,N/A
+company,current_stock_price,ceo,sentiment,30d_return,direction
+GameStop Corp.,$24.37,Mr. Ryan  Cohen,POSITIVE/BULLISH conf=100% irony=0.06 pat=REGULATORY_ACTION,-4.5,reduction

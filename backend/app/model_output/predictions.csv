@@ -1,0 +1,32 @@
+company,current_stock_price,ceo,sentiment,30d_return,direction,predicted_direction,predicted_prob_reduction
+GameStop Corp.,$24.37,Mr. Ryan  Cohen,POSITIVE/BULLISH conf=100% irony=0.06 pat=REGULATORY_ACTION,-4.5,reduction,reduction,0.8772728
+Papa John's,$37.20,John Schnatter,NEGATIVE/BEARISH conf=95% irony=0.10 pat=CEO_RACIAL_SCANDAL,-18.0,reduction,reduction,0.94385725
+CrossFit Inc,$0.00,Greg Glassman,NEGATIVE/BEARISH conf=90% irony=0.05 pat=CEO_RACIAL_SCANDAL,-22.0,reduction,reduction,0.9419015
+Uber,$28.50,Travis Kalanick,NEGATIVE/BEARISH conf=85% irony=0.12 pat=CEO_MISCONDUCT_RESIGNATION,-12.0,reduction,reduction,0.94385725
+McDonald's,$187.00,Steve Easterbrook,NEGATIVE/BEARISH conf=75% irony=0.08 pat=CEO_MISCONDUCT_RESIGNATION,-3.5,reduction,reduction,0.93226933
+Intel,$46.20,Brian Krzanich,NEGATIVE/BEARISH conf=80% irony=0.06 pat=CEO_MISCONDUCT_RESIGNATION,-8.1,reduction,reduction,0.9419015
+Anheuser-Busch,$55.10,Michel Doukeris,NEGATIVE/BEARISH conf=88% irony=0.20 pat=BRAND_BOYCOTT,-14.0,reduction,reduction,0.94385725
+Procter & Gamble,$121.00,David Taylor,NEGATIVE/BEARISH conf=65% irony=0.15 pat=BRAND_BOYCOTT,-2.5,reduction,reduction,0.94385725
+Papa John's,$48.00,Steve Ritchie,NEGATIVE/BEARISH conf=72% irony=0.10 pat=BRAND_BOYCOTT,-11.0,reduction,reduction,0.94385725
+Meta,$120.00,Mark Zuckerberg,NEGATIVE/BEARISH conf=85% irony=0.05 pat=EARNINGS_MISS,-26.0,reduction,reduction,0.9419015
+Netflix,$190.00,Reed Hastings,NEGATIVE/BEARISH conf=90% irony=0.07 pat=EARNINGS_MISS,-35.0,reduction,reduction,0.93226933
+Enron,$0.60,Jeffrey Skilling,NEGATIVE/BEARISH conf=98% irony=0.02 pat=FRAUD_ACCOUNTING,-60.0,reduction,reduction,0.9419015
+Theranos,$0.00,Elizabeth Holmes,NEGATIVE/BEARISH conf=99% irony=0.01 pat=FRAUD_ACCOUNTING,-98.0,reduction,reduction,0.9419015
+Wells Fargo,$43.00,John Stumpf,NEGATIVE/BEARISH conf=82% irony=0.08 pat=REGULATORY_ACTION,-7.0,reduction,reduction,0.94385725
+Boeing,$330.00,Dennis Muilenburg,NEGATIVE/BEARISH conf=87% irony=0.05 pat=CEO_MISCONDUCT_RESIGNATION,-15.0,reduction,reduction,0.92993987
+Peloton,$109.00,John Foley,NEGATIVE/BEARISH conf=78% irony=0.12 pat=CEO_MISCONDUCT_RESIGNATION,-9.0,reduction,reduction,0.94385725
+Apple,$182.00,Tim Cook,POSITIVE/BULLISH conf=85% irony=0.05 pat=POSITIVE_CATALYST,8.0,growth,growth,0.1407344
+NVIDIA,$430.00,Jensen Huang,POSITIVE/BULLISH conf=92% irony=0.03 pat=POSITIVE_CATALYST,28.0,growth,growth,0.1407344
+Microsoft,$338.00,Satya Nadella,POSITIVE/BULLISH conf=80% irony=0.04 pat=POSITIVE_CATALYST,6.5,growth,growth,0.1407344
+Amazon,$128.00,Andy Jassy,POSITIVE/BULLISH conf=75% irony=0.06 pat=POSITIVE_CATALYST,9.0,growth,growth,0.16669855
+Tesla,$220.00,Elon Musk,POSITIVE/BULLISH conf=70% irony=0.18 pat=POSITIVE_CATALYST,12.0,growth,growth,0.14518355
+Meta,$270.00,Mark Zuckerberg,POSITIVE/BULLISH conf=82% irony=0.07 pat=POSITIVE_CATALYST,14.0,growth,growth,0.14518355
+Alphabet,$140.00,Sundar Pichai,POSITIVE/BULLISH conf=78% irony=0.05 pat=POSITIVE_CATALYST,7.5,growth,growth,0.16669855
+Salesforce,$215.00,Marc Benioff,POSITIVE/BULLISH conf=72% irony=0.06 pat=POSITIVE_CATALYST,5.0,growth,growth,0.1407344
+Facebook,$200.00,Mark Zuckerberg,NEGATIVE/BEARISH conf=65% irony=0.10 pat=REGULATORY_ACTION,-4.5,reduction,reduction,0.93226933
+Goldman Sachs,$340.00,David Solomon,NEGATIVE/BEARISH conf=60% irony=0.08 pat=REGULATORY_ACTION,-5.0,reduction,reduction,0.93226933
+Twitter,$39.00,Jack Dorsey,NEGATIVE/BEARISH conf=68% irony=0.14 pat=REGULATORY_ACTION,-6.0,reduction,reduction,0.94385725
+Walmart,$148.00,Doug McMillon,NEUTRAL/NEUTRAL conf=55% irony=0.10 pat=UNKNOWN,1.2,growth,growth,0.24461153
+Target,$158.00,Brian Cornell,NEUTRAL/NEUTRAL conf=52% irony=0.12 pat=BRAND_BOYCOTT,-1.8,reduction,reduction,0.9204519
+Disney,$89.00,Bob Iger,NEGATIVE/BEARISH conf=62% irony=0.09 pat=BRAND_BOYCOTT,-3.2,reduction,reduction,0.94385725
+Starbucks,$98.00,Howard Schultz,NEGATIVE/BEARISH conf=58% irony=0.11 pat=REGULATORY_ACTION,-2.1,reduction,reduction,0.94385725

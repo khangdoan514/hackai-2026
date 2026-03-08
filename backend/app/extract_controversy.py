@@ -1,13 +1,10 @@
 """
 PapaQuant - Article Controversy Extractor
-Reads a .txt file and uses GPT-4.1-mini to extract the most controversial
-paragraph for the News vs Noise game engine.
+Reads a .txt file, calls GPT-4.1-mini, returns controversy JSON.
+Now also saves clean JSON via --json flag for downstream pipeline.
 """
 
-import os
-import sys
-import json
-import argparse
+import os, sys, json, argparse
 from openai import OpenAI
 from dotenv import load_dotenv
 
@@ -15,72 +12,51 @@ load_dotenv()
 
 OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY")
 if not OPENAI_API_KEY:
-    raise EnvironmentError("OPENAI_API_KEY not found in environment. Check your .env file.")
+    raise EnvironmentError("OPENAI_API_KEY not found. Check your .env file.")
 
 client = OpenAI(api_key=OPENAI_API_KEY)
 
 
 def extract_controversial_excerpt(article_text: str) -> dict:
     system_prompt = """You are PapaQuant's News vs Noise AI analyzer.
-Your job is to read financial or market-related articles and produce a ~150 word summary
-of the most controversial, market-moving, or emotionally charged development in the article.
+Read the article and produce a ~150 word summary of the most controversial,
+market-moving, or emotionally charged development.
 
-"Controversial" means:
-- Makes a bold claim about a stock, CEO, company, or market
-- Could cause retail traders to panic buy or panic sell
-- Contains a provocative opinion or prediction
-- Has potential to go viral on r/wallstreetbets or Twitter/X
-- Is ambiguous enough that traders might disagree on whether it's NEWS or NOISE
-
-The "controversial_excerpt" field should be a self-contained ~150 word paragraph that:
-- Summarizes the core controversial event or claim in plain language
-- Includes enough context so it can be read standalone
-- Is written to be suitable for downstream sentiment analysis
-- Does NOT use bullet points or headers — flowing prose only
-
-Return your response as a JSON object with these fields:
+Return ONLY a JSON object with these fields:
 {
-  "controversial_excerpt": "<~150 word prose summary of the most controversial element>",
-  "ticker_tags": ["<relevant tickers, e.g. AAPL, TSLA, DOGE>"],
-  "controversy_score": <float 0.0-1.0, how controversial this is>,
-  "reason": "<one sentence explaining why this is the most controversial part>"
+  "controversial_excerpt": "<~150 word prose summary>",
+  "ticker_tags": ["<e.g. AAPL, TSLA>"],
+  "controversy_score": <float 0.0-1.0>,
+  "reason": "<one sentence why this is the most controversial part>"
 }
-
-Only return valid JSON. No markdown, no explanation outside the JSON."""
-
-    user_prompt = f"""Article Text:
-{article_text[:6000]}
-
-Identify the most controversial element and return a ~150 word prose summary of it."""
+No markdown. No explanation outside the JSON."""
 
     response = client.chat.completions.create(
         model="gpt-4.1-mini",
         messages=[
             {"role": "system", "content": system_prompt},
-            {"role": "user", "content": user_prompt},
+            {"role": "user",   "content": f"Article:\n{article_text[:6000]}"},
         ],
         temperature=0.3,
         max_tokens=600,
         response_format={"type": "json_object"},
     )
-
     return json.loads(response.choices[0].message.content)
 
 
 def run(file_path: str) -> dict:
     if not os.path.isfile(file_path):
         raise FileNotFoundError(f"File not found: {file_path}")
-
     with open(file_path, "r", encoding="utf-8") as f:
-        article_text = f.read().strip()
+        text = f.read().strip()
+    if not text:
+        raise ValueError("File is empty.")
 
-    if not article_text:
-        raise ValueError("The file is empty.")
-
-    print(f"\nReading: {file_path} ({len(article_text.split())} words)")
+    print(f"\nReading: {file_path} ({len(text.split())} words)")
     print("Analyzing with GPT-4.1-mini...\n")
 
-    result = extract_controversial_excerpt(article_text)
+    result = extract_controversial_excerpt(text)
+    result["article"] = os.path.basename(file_path)
 
     print("=" * 60)
     print("MOST CONTROVERSIAL EXCERPT")
@@ -90,16 +66,27 @@ def run(file_path: str) -> dict:
     print(f"Controversy Score: {result.get('controversy_score', 'N/A')}")
     print(f"Reason:            {result.get('reason', 'N/A')}")
     print("=" * 60)
-
     return result
 
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
         description="PapaQuant Controversy Extractor",
-        epilog="Example: python extract_controversy.py article.txt",
+        epilog="Examples:\n"
+               "  python extract_controversy.py article.txt\n"
+               "  python extract_controversy.py article.txt --json output.json",
     )
-    parser.add_argument("file", help="Path to a .txt file containing the article text")
+    parser.add_argument("file", help="Path to .txt article file")
+    parser.add_argument("--json", dest="json_out", default=None,
+                        help="Save extracted JSON to this file (required for AI_analyzer.py)")
     args = parser.parse_args()
 
-    run(args.file)
+    result = run(args.file)
+
+    if args.json_out:
+        with open(args.json_out, "w", encoding="utf-8") as f:
+            json.dump(result, f, indent=2)
+        print(f"\nJSON saved -> {args.json_out}")
+        print(f"Next:  python AI_analyzer.py {args.json_out} --out analysis_results.csv")
+    else:
+        print("\nTip: use --json output.json to save for downstream analysis.")

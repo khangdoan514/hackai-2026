@@ -1,126 +1,134 @@
-import os
-import sys
-import argparse
+"""
+PapaQuant - Full Pipeline Runner
+==================================
+Runs all 3 steps end-to-end:
+  1. extract_controversy.py  →  output.json
+  2. AI_analyzer.py          →  analysis_results.csv
+  3. model.py                →  model_output/
 
-# ── Make sure both sibling files are importable ───────────────────────────────
-_HERE = os.path.dirname(os.path.abspath(__file__))
-if _HERE not in sys.path:
-    sys.path.insert(0, _HERE)
+Usage:
+  python pipeline.py article1.txt
+  python pipeline.py article1.txt article2.txt article3.txt   # batch
+  python pipeline.py --inline                                  # built-in example
+  python pipeline.py article.txt --skip-model                  # steps 1+2 only
+  python pipeline.py article.txt --trials 50 --folds 5
+"""
 
-import extract_controversy as extractor
-import AI_analyzer as analyzer
+import os, sys, json, csv, argparse, importlib.util
 
+HERE = os.path.dirname(os.path.abspath(__file__))
 
-def run_pipeline(
-    url: str = None,
-    raw_text: str = None,
-    output_csv: str = None,
-):
-    """
-    Full pipeline:
-      1. Fetch article + extract most controversial paragraph
-      2. Pull ticker and source from the extraction result
-      3. Run AI_analyzer sentiment analysis
-      4. Write to CSV
+def load_module(name, path):
+    spec = importlib.util.spec_from_file_location(name, path)
+    mod  = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    return mod
 
-    Args:
-        url:        Article URL to fetch (mutually exclusive with raw_text)
-        raw_text:   Raw article text to use directly
-        output_csv: Path to the output CSV (default: analysis_results.csv)
-    """
-    if not url and not raw_text:
-        raise ValueError("Provide either a URL or raw text.")
-
-    output_csv = output_csv or os.path.join(_HERE, "analysis_results.csv")
-
-    # ── Stage 1: Extract controversial paragraph ──────────────────────────────
-    print("\n[Stage 1] Extracting controversial paragraph...")
-    extraction = extractor.run(url=url, raw_text=raw_text)
-
-    paragraph = extraction["controversial_excerpt"]
-    tickers   = extraction.get("ticker_tags", [])
-    ticker    = tickers[0] if tickers else ""
-    source    = url if url else "pasted text"
-
-    print(f"\n  Paragraph : {paragraph[:120]}...")
-    print(f"  Ticker    : {ticker or 'unknown'}")
-    print(f"  Source    : {source}")
-
-    # ── Stage 2: Sentiment analysis + vector search ───────────────────────────
-    print("\n[Stage 2] Running sentiment analysis...")
-    result = analyzer.analyze(
-        paragraph=paragraph,
-        source=source,
-        ticker_hint=ticker,
-    )
-
-    # ── Stage 3: Write to CSV ─────────────────────────────────────────────────
-    print("\n[Stage 3] Saving to CSV...")
-    analyzer.save_to_csv(result, output_csv)
-
+def banner(step, title):
+    print(f"\n{'='*62}")
+    print(f"  STEP {step}: {title}")
+    print(f"{'='*62}\n")
 
 def main():
     parser = argparse.ArgumentParser(
-        description="PapaQuant Pipeline — URL to CSV in one command",
-        formatter_class=argparse.RawDescriptionHelpFormatter,
-        epilog="""
-Examples:
-  # One-time vector DB setup (run this first)
-  python run_pipeline.py --build
-
-  # Analyze an article URL
-  python run_pipeline.py --url https://finance.yahoo.com/news/some-article
-
-  # Analyze pasted text
-  python run_pipeline.py --text "Apple CEO Tim Cook said revenues fell short..."
-
-  # Build + analyze in one shot
-  python run_pipeline.py --build --url https://...
-
-  # Custom output file
-  python run_pipeline.py --url https://... --output game_rounds.csv
-        """,
+        description="PapaQuant Full Pipeline",
+        epilog="Example:  python pipeline.py article1.txt article2.txt",
     )
-
-    parser.add_argument(
-        "--build",
-        action="store_true",
-        help="Build/rebuild the vector DB from tweets_stockprice.csv (required once before analyzing)",
-    )
-    parser.add_argument(
-        "--url",
-        metavar="URL",
-        help="Article URL to fetch and analyze",
-    )
-    parser.add_argument(
-        "--text",
-        metavar="TEXT",
-        help="Raw article text to analyze instead of fetching a URL",
-    )
-    parser.add_argument(
-        "--output",
-        metavar="FILE",
-        default=os.path.join(_HERE, "analysis_results.csv"),
-        help="Output CSV path (default: analysis_results.csv next to this script)",
-    )
-
+    parser.add_argument("articles", nargs="*",
+                        help="One or more .txt article files")
+    parser.add_argument("--inline",       action="store_true",
+                        help="Run built-in Papa John's example (no OpenAI needed)")
+    parser.add_argument("--skip-extract", action="store_true",
+                        help="Skip Step 1 (use existing output.json)")
+    parser.add_argument("--skip-model",   action="store_true",
+                        help="Skip Step 3 (stop after analysis_results.csv)")
+    parser.add_argument("--json-out",     default="output.json",
+                        help="Intermediate JSON path (default: output.json)")
+    parser.add_argument("--csv-out",      default="analysis_results.csv",
+                        help="Analysis CSV path (default: analysis_results.csv)")
+    parser.add_argument("--model-out",    default="model_output",
+                        help="Model output dir (default: model_output/)")
+    parser.add_argument("--trials",       type=int, default=25)
+    parser.add_argument("--folds",        type=int, default=5)
     args = parser.parse_args()
 
-    if not args.build and not args.url and not args.text:
-        parser.print_help()
-        sys.exit(0)
+    # ── Load modules ───────────────────────────────────────────────
+    extractor_path = os.path.join(HERE, "extract_controversy.py")
+    analyzer_path  = os.path.join(HERE, "AI_analyzer.py")
+    model_path_    = os.path.join(HERE, "model.py")
 
-    if args.build:
-        print("\n[Setup] Building vector database...")
-        analyzer.build_vector_db(analyzer.CSV_PATH)
+    analyzer  = load_module("AI_analyzer",  analyzer_path)
 
-    if args.url or args.text:
-        run_pipeline(
-            url=args.url,
-            raw_text=args.text,
-            output_csv=args.output,
-        )
+    # ── Step 1: Extract controversy ───────────────────────────────
+    all_records = []
 
+    if args.inline:
+        banner(1, "EXTRACT CONTROVERSY (inline example)")
+        print("Using built-in Papa John's example — skipping GPT extraction.\n")
+        all_records = [analyzer.INLINE_EXAMPLE]
+
+    elif args.skip_extract:
+        banner(1, "EXTRACT CONTROVERSY (skipped)")
+        print(f"Loading existing: {args.json_out}")
+        with open(args.json_out,"r") as f:
+            raw = json.load(f)
+        all_records = raw if isinstance(raw, list) else [raw]
+
+    else:
+        if not args.articles:
+            parser.print_help()
+            sys.exit("\nERROR: Provide at least one .txt article file, or use --inline.")
+        extractor = load_module("extract_controversy", extractor_path)
+        banner(1, f"EXTRACT CONTROVERSY  ({len(args.articles)} article(s))")
+        for article_path in args.articles:
+            rec = extractor.run(article_path)
+            rec["article"] = os.path.basename(article_path)
+            all_records.append(rec)
+        with open(args.json_out,"w") as f:
+            json.dump(all_records if len(all_records)>1 else all_records[0], f, indent=2)
+        print(f"\nJSON saved -> {args.json_out}  ({len(all_records)} record(s))")
+
+    # ── Step 2: Sentiment analysis ─────────────────────────────────
+    banner(2, "AI SENTIMENT ANALYSIS")
+    import csv as csv_mod
+
+    all_rows = []
+    for rec in all_records:
+        analyzer.print_debug(rec)
+        all_rows.extend(analyzer.analyze(rec))
+
+    with open(args.csv_out,"w",newline="",encoding="utf-8") as f:
+        w = csv_mod.DictWriter(f, fieldnames=analyzer.FIELDS)
+        w.writeheader()
+        w.writerows(all_rows)
+
+    print(f"CSV saved -> {args.csv_out}  ({len(all_rows)} row(s))")
+    print("\n" + ",".join(analyzer.FIELDS))
+    for row in all_rows:
+        print(",".join(str(row[k]) for k in analyzer.FIELDS))
+
+    if args.skip_model:
+        print(f"\nDone (--skip-model). To train: python model.py --data {args.csv_out}")
+        return
+
+    # ── Step 3: Train XGBoost model ────────────────────────────────
+    banner(3, "XGBOOST CLASSIFIER (Optuna HPO)")
+    import importlib, sys as _sys
+    _sys.argv = ["model.py",
+                 "--data",    args.csv_out,
+                 "--out-dir", args.model_out,
+                 "--trials",  str(args.trials),
+                 "--folds",   str(args.folds)]
+    model_mod = load_module("model", model_path_)
+    model_mod.main()
+
+    print(f"\n{'='*62}")
+    print("  PIPELINE COMPLETE")
+    print(f"{'='*62}")
+    print(f"  JSON          : {args.json_out}")
+    print(f"  Analysis CSV  : {args.csv_out}")
+    print(f"  Model output  : {args.model_out}/")
+    print(f"{'='*62}\n")
 
 if __name__ == "__main__":
     main()
