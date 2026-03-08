@@ -34,7 +34,7 @@ export default function Navbar() {
                 {item.label}
 
                 {/* Effect */}
-                <span className={`absolute bottom-0 left-1/2 h-0.5 bg-white transition-all duration-300 transform -translate-x-1/2 ${
+                <span className={`absolute bottom-0 left-1/2 h-0.5 bg-primary-green transition-all duration-300 transform -translate-x-1/2 ${
                 isActive 
                   ? 'w-full' 
                   : 'w-0 group-hover:w-full'

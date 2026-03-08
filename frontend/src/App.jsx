@@ -9,18 +9,14 @@ import './App.css'
 export default function App() {
   return (
     <div className="min-h-screen relative">
-      <div 
-        className="fixed inset-0 z-0"
+      <div className="absolute inset-0 bg-white z-10 overflow-y-auto"></div>
+      <div
+        className="absolute inset-0 bg-black text-3xl text-center rounded-xl m-4 z-20 overflow-y-auto"
         style={{
-          backgroundImage: 'url("/src/assets/img/background.png")',
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundAttachment: 'fixed'
+          outline: "6px solid #0e8616",
+          outlineOffset: "-12px",
         }}
       >
-      </div>
-
-      <div className="absolute inset-0 text-3xl text-center rounded-xl m-4 z-20 overflow-y-auto">
         <div className="relative max-w-4xl mx-auto">
           <div className="relative">
             <div className="relative z-20">
