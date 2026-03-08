@@ -24,7 +24,7 @@ export default function Home() {
 
       {/* Glow behind title */}
       <div
-        className="absolute pointer-events-none w-[600px] h-[300px]"
+        className="absolute pointer-events-none"
         style={{ background: "radial-gradient(ellipse, rgba(106,217,114,0.08) 0%, transparent 70%)" }}
       />
 

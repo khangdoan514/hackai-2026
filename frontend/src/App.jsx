@@ -1,8 +1,8 @@
 import NavBar from "./components/Navbar.jsx"
 import About from "./pages/About.jsx"
+import News from "./pages/News.jsx"
+import Finance from "./pages/Finance.jsx"
 import Home from "./pages/Home.jsx"
-import Play from "./pages/Play.jsx"
-import HeadlineTest from "./pages/HeadlineTest.jsx"
 import { Routes, Route } from "react-router-dom"
 import './App.css'
 
@@ -13,7 +13,7 @@ export default function App() {
         className="fixed inset-0 z-0"
         style={{
           backgroundImage: 'url("/src/assets/img/background.png")',
-          backgroundSize: 'cover',
+          backgroundSize: '100% 100%',
           backgroundPosition: 'center',
           backgroundAttachment: 'fixed'
         }}
@@ -33,9 +33,9 @@ export default function App() {
         <div className="text-white">
           <Routes>
             <Route path="/" element={ <Home /> } />
+            <Route path="/news" element={ <News /> } />
+            <Route path="/finance" element={ <Finance /> } />
             <Route path="/about" element={ <About /> } />
-            <Route path="/play" element={ <Play /> } />
-            <Route path="/headlinetest" element={<HeadlineTest />} />
           </Routes>
         </div>
       </div>
