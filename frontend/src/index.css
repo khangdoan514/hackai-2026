@@ -4,4 +4,11 @@
   --color-primary-green: #6AD972;
   --color-primary-white: #FFFFFF;
   --color-primary-red: #FF0017;
+
+  --color-c-green: #4ADE80;
+  --color-c-card-bg: rgba(15,15,15,0.85);
+  --color-c-inner-bg: rgba(255,255,255,0.03);
+  --color-c-text-muted: rgba(255,255,255,0.4);
+  --color-c-border: rgba(255,255,255,0.08);
+  --color-c-border-hover: rgba(255,255,255,0.2);
 }
