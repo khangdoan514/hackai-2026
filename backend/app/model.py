@@ -9,7 +9,7 @@ from autoxgb import AutoXGB
 # 1. Load your raw data
 # -----------------------------
 # Replace with your real filename
-df = pd.read_csv("ceo_stock_events.csv")
+df = pd.read_csv("analysis_results.csv")
 
 # -----------------------------
 # 2. Basic cleanup
@@ -41,7 +41,7 @@ df["direction"] = (
 valid_labels = {"growth", "reduction"}
 df = df[df["direction"].isin(valid_labels)]
 
-if len(df) < 50:
+if len(df) <= 30:
     raise ValueError("Dataset is too small. Try to get at least 50+ rows to start.")
 
 # -----------------------------
