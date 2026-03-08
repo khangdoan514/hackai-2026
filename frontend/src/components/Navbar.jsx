@@ -4,7 +4,7 @@ export default function Navbar() {
   const location = useLocation()
 
   return (
-    <nav className="px-15 pt-1 pb-4 text-2xl flex items-center justify-between inset-0 rounded-xl transition-all duration-300">
+    <nav className="px-15 pt-3 pb-20 text-2xl flex items-center justify-between inset-0 rounded-xl transition-all duration-300">
       {/* ==================== Navigation Links ==================== */}
       <div className="flex items-center space-x-3 flex-1">
         <Link
