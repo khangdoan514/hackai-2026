@@ -407,15 +407,10 @@ export default function Play() {
                 </button>
               </div>
             )}
-
-            <div className="text-center text-[10px] flex-shrink-0 pb-1" style={{ color: C.textMuted }}>
-              chatting as <span style={{ color: C.green }}>{username}</span>
-            </div>
-
           </div>
 
           {/* RIGHT column */}
-          <div className="flex flex-col gap-3 min-h-0 overflow-hidden">
+          <div className="flex flex-col gap-3 min-h-0 justify-items overflow-hidden">
 
             {/* Portfolio */}
             <div
@@ -484,7 +479,10 @@ export default function Play() {
                 </button>
               </div>
             </div>
+          </div>
 
+          <div className="text-center text-[10px] flex-shrink-0 pb-1" style={{ color: C.textMuted }}>
+            chatting as <span style={{ color: C.green }}>{username}</span>
           </div>
         </div>
       </div>

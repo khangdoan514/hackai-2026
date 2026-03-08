@@ -28,3 +28,7 @@ venv
 *.sw?
 
 .env
+
+# Chroma
+papaQuant_chroma
+papaQuant_vectorizer.pkl

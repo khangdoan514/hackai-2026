@@ -9,3 +9,5 @@ requests==2.32.5
 dotenv==0.9.9
 bs4==0.0.2
 newspaper3k==0.2.8
+chromadb==1.5.2
+scikit-learn==1.7.2

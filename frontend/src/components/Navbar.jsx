@@ -19,9 +19,9 @@ export default function Navbar() {
         <div className="hidden md:flex items-center space-x-10">
           {[
             { path: '/', label: 'Home' },
-            { path: '/about', label: 'About' },
-            { path: '/play', label: 'Play' },
-            { path: '/headlinetest', label: 'Headline Test' }
+            { path: '/news', label: 'News' },
+            { path: '/finance', label: 'Finance' },
+            { path: '/about', label: 'About' }
           ].map((item) => {
             const isActive = location.pathname === item.path || (item.path === '/' && location.pathname === '/home')
             return (
