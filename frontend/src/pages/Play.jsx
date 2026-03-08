@@ -13,56 +13,15 @@ const C = {
   innerBg:   "rgba(255,255,255,0.05)",
 };
 
-// Each round ties a headline to its stock — same company, same question
 const ROUNDS = [
-  {
-    source: "Business Insider", time: "1 hour ago",
-    text: "Papa John's CEO Caught on Hot Mic Calling Customers 'Idiots' – Brand Backlash Erupts on Social Media",
-    correct: "crash",
-    ticker: "PZZA", company: "Papa John's", basePrice: 58,
-  },
-  {
-    source: "Reuters", time: "30 mins ago",
-    text: "Apple Reports Record-Breaking Q4 Earnings, Beats Wall Street Estimates by 18% – iPhone Demand Surges",
-    correct: "grow",
-    ticker: "AAPL", company: "Apple", basePrice: 213,
-  },
-  {
-    source: "TechCrunch", time: "2 hours ago",
-    text: "Tesla Recalls 500,000 Vehicles Over Autopilot Software Defect – NHTSA Launches Formal Investigation",
-    correct: "crash",
-    ticker: "TSLA", company: "Tesla", basePrice: 248,
-  },
-  {
-    source: "CNBC", time: "45 mins ago",
-    text: "NVIDIA Announces Next-Gen Blackwell Chip — AI Demand 'Far Exceeds' Production Capacity, CEO Says",
-    correct: "grow",
-    ticker: "NVDA", company: "NVIDIA", basePrice: 875,
-  },
-  {
-    source: "Wall Street Journal", time: "3 hours ago",
-    text: "McDonald's E. Coli Outbreak Linked to Quarter Pounder — 75 Cases Across 13 States, FDA Investigating",
-    correct: "crash",
-    ticker: "MCD", company: "McDonald's", basePrice: 294,
-  },
-  {
-    source: "Bloomberg", time: "20 mins ago",
-    text: "Amazon Wins $10 Billion Pentagon Cloud Contract, Beating Microsoft in Final Round of JEDI Rebid",
-    correct: "grow",
-    ticker: "AMZN", company: "Amazon", basePrice: 185,
-  },
-  {
-    source: "MarketWatch", time: "1 hour ago",
-    text: "Meta CEO Mark Zuckerberg Sued by 33 States Over Addictive Features Targeting Minors on Instagram",
-    correct: "crash",
-    ticker: "META", company: "Meta", basePrice: 512,
-  },
-  {
-    source: "Forbes", time: "15 mins ago",
-    text: "Netflix Smashes Q3 Subscriber Forecasts, Adding 9 Million New Users — Ad-Supported Tier Driving Growth",
-    correct: "grow",
-    ticker: "NFLX", company: "Netflix", basePrice: 680,
-  },
+  { source: "Business Insider", time: "1 hour ago", text: "Papa John's CEO Caught on Hot Mic Calling Customers 'Idiots' – Brand Backlash Erupts on Social Media", correct: "crash", ticker: "PZZA", company: "Papa John's", basePrice: 58 },
+  { source: "Reuters", time: "30 mins ago", text: "Apple Reports Record-Breaking Q4 Earnings, Beats Wall Street Estimates by 18% – iPhone Demand Surges", correct: "grow", ticker: "AAPL", company: "Apple", basePrice: 213 },
+  { source: "TechCrunch", time: "2 hours ago", text: "Tesla Recalls 500,000 Vehicles Over Autopilot Software Defect – NHTSA Launches Formal Investigation", correct: "crash", ticker: "TSLA", company: "Tesla", basePrice: 248 },
+  { source: "CNBC", time: "45 mins ago", text: "NVIDIA Announces Next-Gen Blackwell Chip — AI Demand 'Far Exceeds' Production Capacity, CEO Says", correct: "grow", ticker: "NVDA", company: "NVIDIA", basePrice: 875 },
+  { source: "Wall Street Journal", time: "3 hours ago", text: "McDonald's E. Coli Outbreak Linked to Quarter Pounder — 75 Cases Across 13 States, FDA Investigating", correct: "crash", ticker: "MCD", company: "McDonald's", basePrice: 294 },
+  { source: "Bloomberg", time: "20 mins ago", text: "Amazon Wins $10 Billion Pentagon Cloud Contract, Beating Microsoft in Final Round of JEDI Rebid", correct: "grow", ticker: "AMZN", company: "Amazon", basePrice: 185 },
+  { source: "MarketWatch", time: "1 hour ago", text: "Meta CEO Mark Zuckerberg Sued by 33 States Over Addictive Features Targeting Minors on Instagram", correct: "crash", ticker: "META", company: "Meta", basePrice: 512 },
+  { source: "Forbes", time: "15 mins ago", text: "Netflix Smashes Q3 Subscriber Forecasts, Adding 9 Million New Users — Ad-Supported Tier Driving Growth", correct: "grow", ticker: "NFLX", company: "Netflix", basePrice: 680 },
 ];
 
 const TIMEFRAMES = ["1D", "5D", "1M", "3M"];
@@ -94,7 +53,7 @@ function StockChart({ data, color, height = 120 }) {
   const lx = W, ly = H - ((last - min) / rng) * (H - 6) - 3;
   const gid = `g${color.replace("#", "")}`;
   return (
-    <svg width="100%" viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="none" style={{ display: "block" }}>
+    <svg width="100%" viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="none" className="block">
       <defs>
         <linearGradient id={gid} x1="0" y1="0" x2="0" y2="1">
           <stop offset="0%"   stopColor={color} stopOpacity="0.3" />
@@ -118,7 +77,6 @@ function getTimerColor(s) {
 }
 
 export default function Play() {
-  // Single round index drives both headline and stock
   const [roundIdx,      setRoundIdx]      = useState(0);
   const [seconds,       setSeconds]       = useState(60);
   const [selected,      setSelected]      = useState(null);
@@ -126,13 +84,11 @@ export default function Play() {
   const [myScore,       setMyScore]       = useState(0);
   const timerRef = useRef(null);
 
-  // Chat
   const [chatMessages, setChatMessages] = useState([]);
   const [chatInput,    setChatInput]    = useState("");
   const [username]                      = useState(() => "User" + Math.floor(Math.random() * 9000 + 1000));
   const chatEndRef = useRef(null);
 
-  // Stock
   const [timeframe,     setTimeframe]     = useState("1D");
   const [chartData,     setChartData]     = useState(() => generateHistory(ROUNDS[0].basePrice, TF_POINTS["1D"]));
   const [stockPick,     setStockPick]     = useState(null);
@@ -155,7 +111,6 @@ export default function Play() {
   const displayPrice = (round.basePrice + lastPrice - firstPrice).toFixed(2);
   const chartColor   = stockRevealed ? (stockResult === "grow" ? C.green : C.red) : C.green;
 
-  // Headline countdown
   useEffect(() => {
     if (revealed) return;
     clearInterval(timerRef.current);
@@ -165,7 +120,6 @@ export default function Play() {
     return () => clearInterval(timerRef.current);
   }, [roundIdx, revealed]);
 
-  // Stock countdown
   useEffect(() => {
     if (stockRevealed) return;
     clearInterval(stockTimerRef.current);
@@ -176,12 +130,10 @@ export default function Play() {
     return () => clearInterval(stockTimerRef.current);
   }, [roundIdx, stockRevealed]);
 
-  // Regenerate chart when round or timeframe changes
   useEffect(() => {
     setChartData(generateHistory(round.basePrice, TF_POINTS[timeframe]));
   }, [roundIdx, timeframe]);
 
-  // Animate live chart on 1D
   useEffect(() => {
     if (stockRevealed || timeframe !== "1D") return;
     const id = setInterval(() => {
@@ -194,7 +146,6 @@ export default function Play() {
     return () => clearInterval(id);
   }, [roundIdx, stockRevealed, timeframe]);
 
-  // Opponent pick
   useEffect(() => {
     if (stockRevealed) return;
     setOpponentPick(null);
@@ -205,10 +156,8 @@ export default function Play() {
     return () => clearTimeout(opponentRef.current);
   }, [roundIdx, stockRevealed]);
 
-  // Chat scroll
   useEffect(() => { chatEndRef.current?.scrollIntoView({ behavior: "smooth" }); }, [chatMessages]);
 
-  // Poll chat
   useEffect(() => {
     const load = async () => {
       try {
@@ -235,11 +184,9 @@ export default function Play() {
   const nextRound = () => {
     const next = (roundIdx + 1) % ROUNDS.length;
     setRoundIdx(next);
-    // reset headline
     setSeconds(60);
     setSelected(null);
     setRevealed(false);
-    // reset stock
     setStockPick(null);
     setOpponentPick(null);
     setStockRevealed(false);
@@ -264,8 +211,10 @@ export default function Play() {
 
   const sendMessage = async () => {
     if (!chatInput.trim()) return;
-    const msg = { id: Date.now(), user: username, text: chatInput.trim(),
-      time: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }) };
+    const msg = {
+      id: Date.now(), user: username, text: chatInput.trim(),
+      time: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })
+    };
     const updated = [...chatMessages, msg].slice(-50);
     setChatMessages(updated);
     setChatInput("");
@@ -273,225 +222,270 @@ export default function Play() {
   };
 
   return (
-    <div style={{ fontFamily: "'DM Sans', sans-serif", background: C.bg, minHeight: "100vh", padding: "20px 16px" }}>
+    <div className="fixed inset-0 overflow-hidden bg-transparent pt-22" style={{ fontFamily: "'DM Sans', sans-serif" }}>
       <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
 
-      <div style={{ maxWidth: 1160, margin: "0 auto", display: "grid", gridTemplateColumns: "1fr 320px", gap: 16 }}>
+      <div className="h-full px-4 pt-5 pb-4 gap-3" style={{ maxWidth: 1160, margin: "0 auto" }}>
 
-        {/* ══════════════════════════════
-            LEFT — Headline + Stock chart
-            ══════════════════════════════ */}
-        <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-
-          {/* Round / Score / Timer */}
-          <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-            <span style={{ fontSize: 11, color: C.textMuted, fontWeight: 700, letterSpacing: "0.1em" }}>
-              ROUND {roundIdx + 1}/{ROUNDS.length}
-            </span>
-            <span style={{ fontSize: 11, color: C.textMuted, fontWeight: 700, letterSpacing: "0.1em" }}>
-              SCORE: <span style={{ color: C.green }}>{myScore}</span>
-            </span>
-            <div style={{ marginLeft: "auto", border: `2px solid ${timerStyle.border}`, borderRadius: 20, padding: "4px 14px", background: timerStyle.bg, transition: "all 0.5s", display: "flex", alignItems: "center", gap: 6 }}>
-              <span style={{ fontSize: 20, fontWeight: 800, color: timerStyle.color, fontVariantNumeric: "tabular-nums", lineHeight: 1 }}>{seconds}</span>
-              <span style={{ fontSize: 9, fontWeight: 700, letterSpacing: "0.12em", color: timerStyle.color, opacity: 0.7 }}>SEC</span>
-            </div>
-          </div>
-
-          {/* Headline card */}
-          <div style={{ background: C.cardBg, border: `1.5px solid ${C.cardBorder}`, borderRadius: 16, padding: "22px 22px 16px", boxShadow: "0 4px 24px rgba(0,0,0,0.4)" }}>
-            <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 12 }}>
-              <span style={{ fontSize: 11, color: C.textMuted, fontWeight: 500 }}>{round.source}</span>
-              <span style={{ fontSize: 11, color: C.textMuted, fontWeight: 500 }}>{round.time}</span>
-            </div>
-            <h2 style={{ fontSize: "clamp(17px, 2.2vw, 22px)", fontWeight: 800, lineHeight: 1.3, color: C.textLight, margin: "0 0 18px" }}>
-              {round.text}
-            </h2>
-            <div style={{ borderTop: "1px solid rgba(106,217,114,0.2)", paddingTop: 12, display: "flex", alignItems: "center", justifyContent: "center", gap: 8 }}>
-              <span style={{ fontSize: 10, fontWeight: 700, letterSpacing: "0.16em", color: C.textMuted }}>HOW WILL</span>
-              <span style={{ fontSize: 11, fontWeight: 800, color: C.green, letterSpacing: "0.08em" }}>{round.ticker}</span>
-              <span style={{ fontSize: 10, fontWeight: 700, letterSpacing: "0.16em", color: C.textMuted }}>REACT?</span>
-            </div>
-          </div>
-
-          {/* Stock chart card — same company as headline */}
-          <div style={{ background: C.cardBg, border: `1.5px solid ${C.cardBorder}`, borderRadius: 16, padding: "16px", boxShadow: "0 4px 24px rgba(0,0,0,0.3)" }}>
-
-            {/* Ticker + price */}
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 12 }}>
-              <div>
-                <div style={{ fontSize: 22, fontWeight: 800, color: C.textLight, lineHeight: 1 }}>{round.ticker}</div>
-                <div style={{ fontSize: 10, color: C.textMuted, marginTop: 2 }}>{round.company}</div>
-              </div>
-              <div style={{ textAlign: "right" }}>
-                <div style={{ fontSize: 18, fontWeight: 700, color: C.textLight }}>${Number(displayPrice).toLocaleString()}</div>
-                <div style={{ fontSize: 11, fontWeight: 700, color: parseFloat(pricePct) >= 0 ? C.green : C.red }}>
-                  {parseFloat(pricePct) >= 0 ? "▲" : "▼"} {Math.abs(pricePct)}%
-                </div>
-              </div>
-            </div>
-
-            {/* Timeframe tabs only — no stock switcher */}
-            <div style={{ display: "flex", gap: 4, marginBottom: 10 }}>
-              {TIMEFRAMES.map(tf => (
-                <button key={tf} onClick={() => setTimeframe(tf)}
-                  style={{ padding: "3px 10px", borderRadius: 6, border: "none", fontSize: 10, fontWeight: 700, cursor: "pointer",
-                    background: timeframe === tf ? C.green : C.innerBg,
-                    color:      timeframe === tf ? "#000"  : C.textMuted, transition: "all 0.2s" }}>
-                  {tf}
-                </button>
-              ))}
-            </div>
-
-            {/* Chart */}
-            <div style={{ borderRadius: 8, overflow: "hidden", height: 140, marginBottom: 8 }}>
-              <StockChart data={chartData} color={chartColor} height={140} />
-            </div>
-
-            {/* Axis labels */}
-            <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 10 }}>
-              <span style={{ fontSize: 9, color: C.textMuted }}>
-                {timeframe === "1D" ? "24h ago" : timeframe === "5D" ? "5d ago" : timeframe === "1M" ? "1mo ago" : "3mo ago"}
-              </span>
-              <span style={{ fontSize: 9, color: C.textMuted }}>Now</span>
-            </div>
-
-            {/* Timer + opponent row */}
-            {!stockRevealed && (
-              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 10 }}>
-                <div style={{ fontSize: 10, color: C.textMuted }}>
-                  Opp:&nbsp;{opponentPick
-                    ? <span style={{ color: opponentPick === "grow" ? C.green : C.red, fontWeight: 700 }}>{opponentPick.toUpperCase()} ✓</span>
-                    : <span>thinking…</span>}
-                </div>
-                <div style={{ fontSize: 10, color: C.textMuted }}>
-                  GUESS IN&nbsp;
-                  <span style={{ fontWeight: 800, fontSize: 14, color: stockSecs > 15 ? C.green : stockSecs > 7 ? C.yellow : C.red, fontVariantNumeric: "tabular-nums" }}>
-                    {stockSecs}s
-                  </span>
-                </div>
-              </div>
-            )}
-
-            {/* Crash / Grow picks or result */}
-            {!stockRevealed ? (
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
-                {[
-                  { key: "crash", icon: <TrendingDown size={16} />, label: "CRASH" },
-                  { key: "grow",  icon: <TrendingUp   size={16} />, label: "GROW"  },
-                ].map(({ key, icon, label }) => (
-                  <button key={key} onClick={() => handleStockPick(key)} disabled={!!stockPick}
-                    style={{
-                      background: stockPick === key ? (key === "grow" ? "rgba(106,217,114,0.18)" : "rgba(255,68,85,0.18)") : C.innerBg,
-                      border: `1.5px solid ${key === "grow" ? C.green : C.red}`,
-                      borderRadius: 10, padding: "10px 8px", cursor: stockPick ? "default" : "pointer",
-                      display: "flex", alignItems: "center", justifyContent: "center", gap: 7,
-                      color: key === "grow" ? C.green : C.red, fontWeight: 800, fontSize: 13, transition: "all 0.2s",
-                    }}>
-                    {icon} {label}
-                  </button>
-                ))}
-              </div>
-            ) : (
-              <div style={{ background: "rgba(0,0,0,0.4)", borderRadius: 10, padding: "14px", textAlign: "center" }}>
-                <div style={{ fontSize: 10, color: C.textMuted, marginBottom: 6, letterSpacing: "0.1em" }}>
-                  {round.ticker} RESULT
-                </div>
-                <div style={{ fontSize: 16, fontWeight: 800, color: stockResult === "grow" ? C.green : C.red, marginBottom: 10 }}>
-                  {stockResult === "grow" ? "📈 GREW" : "📉 CRASHED"}
-                </div>
-                <div style={{ display: "flex", justifyContent: "space-around", marginBottom: 12 }}>
-                  {[{ label: "You", pick: stockPick }, { label: "Opponent", pick: opponentPick }].map(({ label, pick }) => (
-                    <div key={label}>
-                      <div style={{ color: C.textMuted, fontSize: 10, marginBottom: 3 }}>{label}</div>
-                      <div style={{ fontWeight: 700, fontSize: 14, color: pick === stockResult ? C.green : C.red }}>
-                        {pick ? (pick === stockResult ? "+$150" : "-$150") : "no pick"}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-                <button onClick={nextRound} style={{ background: C.green, color: "#000", border: "none", borderRadius: 8, padding: "8px 22px", fontWeight: 800, fontSize: 12, cursor: "pointer" }}>
-                  NEXT ROUND →
-                </button>
-              </div>
-            )}
-          </div>
-
-          {/* Headline result banner */}
-          {revealed && (
-            <div style={{ background: isCorrect ? "rgba(106,217,114,0.1)" : "rgba(255,68,85,0.1)", border: `1.5px solid ${isCorrect ? C.green : C.red}`, borderRadius: 12, padding: "11px 16px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-              <span style={{ fontWeight: 700, color: isCorrect ? C.green : C.red, fontSize: 13 }}>
-                {selected
-                  ? (isCorrect ? `✓ Correct! ${round.ticker} was expected to ${round.correct}.` : `✗ Wrong. ${round.ticker} was expected to ${round.correct}.`)
-                  : `⏱ Time's up! ${round.ticker} was expected to ${round.correct}.`}
-              </span>
-              <button onClick={nextRound} style={{ background: C.green, color: "#000", border: "none", borderRadius: 8, padding: "7px 16px", fontWeight: 800, fontSize: 11, cursor: "pointer" }}>
-                NEXT →
-              </button>
-            </div>
-          )}
-
-          <div style={{ textAlign: "center", fontSize: 10, color: C.textMuted }}>
-            chatting as <span style={{ color: C.green }}>{username}</span>
+        {/* TOP BAR */}
+        <div className="flex items-center gap-3 flex-shrink-0">
+          <span className="text-[11px] font-bold tracking-widest" style={{ color: C.textMuted }}>
+            ROUND {roundIdx + 1}/{ROUNDS.length}
+          </span>
+          <span className="text-[11px] font-bold tracking-widest" style={{ color: C.textMuted }}>
+            SCORE: <span style={{ color: C.green }}>{myScore}</span>
+          </span>
+          <div
+            className="ml-auto flex items-center gap-1.5 rounded-full px-3.5 py-1 transition-all duration-500"
+            style={{ border: `2px solid ${timerStyle.border}`, background: timerStyle.bg }}
+          >
+            <span className="text-xl font-extrabold leading-none tabular-nums" style={{ color: timerStyle.color }}>{seconds}</span>
+            <span className="text-[9px] font-bold tracking-widest opacity-70" style={{ color: timerStyle.color }}>SEC</span>
           </div>
         </div>
 
-        {/* ══════════════════════════════
-            RIGHT — Portfolio + Live Chat
-            ══════════════════════════════ */}
-        <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+        {/* MAIN BOX — both columns */}
+        <div className="flex-1 grid gap-4 min-h-0" style={{ gridTemplateColumns: "1fr 320px" }}>
 
-          {/* Portfolio */}
-          <div style={{ background: C.cardBg, border: `1.5px solid ${C.cardBorder}`, borderRadius: 16, padding: "12px 14px" }}>
-            <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: "0.14em", color: C.textMuted, marginBottom: 8 }}>PORTFOLIO</div>
-            <div style={{ display: "flex", gap: 8 }}>
-              {[{ label: "You", val: portfolioMe }, { label: "Opponent", val: portfolioOpp }].map(({ label, val }) => (
-                <div key={label} style={{ flex: 1, background: C.innerBg, borderRadius: 10, padding: "8px 10px", textAlign: "center" }}>
-                  <div style={{ fontSize: 9, color: C.textMuted, fontWeight: 600, marginBottom: 3 }}>{label}</div>
-                  <div style={{ fontSize: 18, fontWeight: 800, color: val >= 1000 ? C.green : C.red }}>${val.toLocaleString()}</div>
-                </div>
-              ))}
-            </div>
-          </div>
+          {/* LEFT column */}
+          <div className="flex flex-col gap-3 overflow-y-auto min-h-0" style={{ scrollbarWidth: "none" }}>
 
-          {/* Live Chat */}
-          <div style={{ background: C.cardBg, border: `1.5px solid ${C.cardBorder}`, borderRadius: 16, overflow: "hidden", display: "flex", flexDirection: "column", flex: 1, minHeight: 320 }}>
-            <div style={{ padding: "10px 14px", borderBottom: "1px solid rgba(106,217,114,0.2)", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-              <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
-                <MessageCircle size={13} color={C.green} />
-                <span style={{ fontWeight: 700, fontSize: 12, color: C.textLight }}>Live Chat</span>
+            {/* Headline card */}
+            <div
+              className="rounded-2xl px-[22px] pt-[22px] pb-4 flex-shrink-0"
+              style={{ background: C.cardBg, border: `1.5px solid ${C.cardBorder}`, boxShadow: "0 4px 24px rgba(0,0,0,0.4)" }}
+            >
+              <div className="flex justify-between mb-3">
+                <span className="text-[11px] font-medium" style={{ color: C.textMuted }}>{round.source}</span>
+                <span className="text-[11px] font-medium" style={{ color: C.textMuted }}>{round.time}</span>
               </div>
-              <span style={{ fontSize: 10, color: C.textMuted }}>{chatMessages.length} msgs</span>
+              <h2 className="text-[clamp(17px,2.2vw,22px)] font-extrabold leading-snug mb-[18px]" style={{ color: C.textLight }}>
+                {round.text}
+              </h2>
+              <div className="flex items-center justify-center gap-2 pt-3" style={{ borderTop: "1px solid rgba(106,217,114,0.2)" }}>
+                <span className="text-[10px] font-bold tracking-[0.16em]" style={{ color: C.textMuted }}>HOW WILL</span>
+                <span className="text-[11px] font-extrabold tracking-[0.08em]" style={{ color: C.green }}>{round.ticker}</span>
+                <span className="text-[10px] font-bold tracking-[0.16em]" style={{ color: C.textMuted }}>REACT?</span>
+              </div>
             </div>
-            <div style={{ flex: 1, overflowY: "auto", padding: "8px 12px", display: "flex", flexDirection: "column", gap: 6 }}>
-              {chatMessages.length === 0 ? (
-                <div style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center", color: C.textMuted, fontSize: 12, textAlign: "center" }}>
-                  No messages yet. Share your thoughts!
+
+            {/* Stock chart card */}
+            <div
+              className="rounded-2xl p-4 flex-shrink-0"
+              style={{ background: C.cardBg, border: `1.5px solid ${C.cardBorder}`, boxShadow: "0 4px 24px rgba(0,0,0,0.3)" }}
+            >
+              {/* Ticker + price */}
+              <div className="flex justify-between items-start mb-3">
+                <div>
+                  <div className="text-[22px] font-extrabold leading-none" style={{ color: C.textLight }}>{round.ticker}</div>
+                  <div className="text-[10px] mt-0.5" style={{ color: C.textMuted }}>{round.company}</div>
                 </div>
-              ) : chatMessages.map(msg => (
-                <div key={msg.id}>
-                  <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 1 }}>
-                    <span style={{ fontSize: 10, fontWeight: 700, color: msg.user === username ? C.green : C.textMuted }}>
-                      {msg.user === username ? "You" : msg.user}
+                <div className="text-right">
+                  <div className="text-lg font-bold" style={{ color: C.textLight }}>${Number(displayPrice).toLocaleString()}</div>
+                  <div className="text-[11px] font-bold" style={{ color: parseFloat(pricePct) >= 0 ? C.green : C.red }}>
+                    {parseFloat(pricePct) >= 0 ? "▲" : "▼"} {Math.abs(pricePct)}%
+                  </div>
+                </div>
+              </div>
+
+              {/* Timeframe tabs */}
+              <div className="flex gap-1 mb-2.5">
+                {TIMEFRAMES.map(tf => (
+                  <button
+                    key={tf}
+                    onClick={() => setTimeframe(tf)}
+                    className="px-2.5 py-0.5 rounded-md text-[10px] font-bold cursor-pointer border-none transition-all duration-200"
+                    style={{ background: timeframe === tf ? C.green : C.innerBg, color: timeframe === tf ? "#000" : C.textMuted }}
+                  >
+                    {tf}
+                  </button>
+                ))}
+              </div>
+
+              {/* Chart OR Result — same space */}
+              {!stockRevealed ? (
+                <>
+                  {/* Chart */}
+                  <div className="rounded-lg overflow-hidden h-[140px] mb-2">
+                    <StockChart data={chartData} color={chartColor} height={140} />
+                  </div>
+
+                  {/* Axis labels */}
+                  <div className="flex justify-between mb-2.5">
+                    <span className="text-[9px]" style={{ color: C.textMuted }}>
+                      {timeframe === "1D" ? "24h ago" : timeframe === "5D" ? "5d ago" : timeframe === "1M" ? "1mo ago" : "3mo ago"}
                     </span>
-                    <span style={{ fontSize: 9, color: C.textMuted }}>{msg.time}</span>
+                    <span className="text-[9px]" style={{ color: C.textMuted }}>Now</span>
                   </div>
-                  <div style={{ fontSize: 11, color: C.textLight, lineHeight: 1.4, background: msg.user === username ? "rgba(106,217,114,0.08)" : C.innerBg, borderRadius: 7, padding: "4px 8px" }}>
-                    {msg.text}
+
+                  {/* Opponent row */}
+                  <div className="flex justify-between items-center mb-2.5">
+                    <div className="text-[10px]" style={{ color: C.textMuted }}>
+                      Opp:&nbsp;{opponentPick
+                        ? <span className="font-bold" style={{ color: opponentPick === "grow" ? C.green : C.red }}>{opponentPick.toUpperCase()} ✓</span>
+                        : <span>thinking…</span>}
+                    </div>
+                    <div className="text-[10px]" style={{ color: C.textMuted }}>
+                      GUESS IN&nbsp;
+                      <span className="font-extrabold text-sm tabular-nums" style={{ color: stockSecs > 15 ? C.green : stockSecs > 7 ? C.yellow : C.red }}>
+                        {stockSecs}s
+                      </span>
+                    </div>
                   </div>
+
+                  {/* Crash / Grow buttons */}
+                  <div className="grid grid-cols-2 gap-2.5">
+                    {[
+                      { key: "crash", icon: <TrendingDown size={16} />, label: "CRASH" },
+                      { key: "grow",  icon: <TrendingUp   size={16} />, label: "GROW"  },
+                    ].map(({ key, icon, label }) => (
+                      <button
+                        key={key}
+                        onClick={() => handleStockPick(key)}
+                        disabled={!!stockPick}
+                        className="flex items-center justify-center gap-1.5 rounded-[10px] py-2.5 px-2 text-[13px] font-extrabold transition-all duration-200"
+                        style={{
+                          background: stockPick === key ? (key === "grow" ? "rgba(106,217,114,0.18)" : "rgba(255,68,85,0.18)") : C.innerBg,
+                          border: `1.5px solid ${key === "grow" ? C.green : C.red}`,
+                          cursor: stockPick ? "default" : "pointer",
+                          color: key === "grow" ? C.green : C.red,
+                        }}
+                      >
+                        {icon} {label}
+                      </button>
+                    ))}
+                  </div>
+                </>
+              ) : (
+                /* Result replaces the chart */
+                <div className="rounded-[10px] p-5 text-center bg-black/40 flex flex-col items-center justify-center" style={{ minHeight: 240 }}>
+                  <div className="text-[10px] mb-2 tracking-[0.1em]" style={{ color: C.textMuted }}>{round.ticker} RESULT</div>
+                  <div className="text-2xl font-extrabold mb-4" style={{ color: stockResult === "grow" ? C.green : C.red }}>
+                    {stockResult === "grow" ? "📈 GREW" : "📉 CRASHED"}
+                  </div>
+                  <div className="flex justify-around w-full mb-5">
+                    {[{ label: "You", pick: stockPick }, { label: "Opponent", pick: opponentPick }].map(({ label, pick }) => (
+                      <div key={label}>
+                        <div className="text-[10px] mb-0.5" style={{ color: C.textMuted }}>{label}</div>
+                        <div className="font-bold text-sm" style={{ color: pick === stockResult ? C.green : C.red }}>
+                          {pick ? (pick === stockResult ? "+$150" : "-$150") : "no pick"}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                  <button
+                    onClick={nextRound}
+                    className="border-none rounded-lg px-6 py-2 font-extrabold text-xs cursor-pointer"
+                    style={{ background: C.green, color: "#000" }}
+                  >
+                    NEXT ROUND →
+                  </button>
                 </div>
-              ))}
-              <div ref={chatEndRef} />
+              )}
             </div>
-            <div style={{ padding: "7px 10px", borderTop: "1px solid rgba(106,217,114,0.2)", display: "flex", gap: 6, alignItems: "center" }}>
-              <input value={chatInput} onChange={e => setChatInput(e.target.value)} onKeyDown={e => e.key === "Enter" && sendMessage()}
-                placeholder="Is this legit or trolling?"
-                style={{ flex: 1, border: "none", background: C.innerBg, borderRadius: 7, padding: "6px 10px", fontSize: 11, color: C.textLight, outline: "none", fontFamily: "inherit" }} />
-              <button onClick={sendMessage} style={{ background: "none", border: "none", cursor: "pointer", color: C.green, padding: 2, display: "flex", alignItems: "center" }}>
-                <Send size={14} />
-              </button>
+
+            {/* Headline result banner */}
+            {revealed && (
+              <div
+                className="rounded-xl px-4 py-[11px] flex justify-between items-center flex-shrink-0"
+                style={{
+                  background: isCorrect ? "rgba(106,217,114,0.1)" : "rgba(255,68,85,0.1)",
+                  border: `1.5px solid ${isCorrect ? C.green : C.red}`,
+                }}
+              >
+                <span className="font-bold text-[13px]" style={{ color: isCorrect ? C.green : C.red }}>
+                  {selected
+                    ? (isCorrect ? `✓ Correct! ${round.ticker} was expected to ${round.correct}.` : `✗ Wrong. ${round.ticker} was expected to ${round.correct}.`)
+                    : `⏱ Time's up! ${round.ticker} was expected to ${round.correct}.`}
+                </span>
+                <button
+                  onClick={nextRound}
+                  className="border-none rounded-lg px-4 py-1.5 font-extrabold text-[11px] cursor-pointer"
+                  style={{ background: C.green, color: "#000" }}
+                >
+                  NEXT →
+                </button>
+              </div>
+            )}
+
+            <div className="text-center text-[10px] flex-shrink-0 pb-1" style={{ color: C.textMuted }}>
+              chatting as <span style={{ color: C.green }}>{username}</span>
             </div>
+
           </div>
 
+          {/* RIGHT column */}
+          <div className="flex flex-col gap-3 min-h-0 overflow-hidden">
+
+            {/* Portfolio */}
+            <div
+              className="rounded-2xl px-3.5 py-3 flex-shrink-0"
+              style={{ background: C.cardBg, border: `1.5px solid ${C.cardBorder}` }}
+            >
+              <div className="text-[9px] font-bold tracking-[0.14em] mb-2" style={{ color: C.textMuted }}>PORTFOLIO</div>
+              <div className="flex gap-2">
+                {[{ label: "You", val: portfolioMe }, { label: "Opponent", val: portfolioOpp }].map(({ label, val }) => (
+                  <div key={label} className="flex-1 rounded-[10px] px-2.5 py-2 text-center" style={{ background: C.innerBg }}>
+                    <div className="text-[9px] font-semibold mb-0.5" style={{ color: C.textMuted }}>{label}</div>
+                    <div className="text-lg font-extrabold" style={{ color: val >= 1000 ? C.green : C.red }}>${val.toLocaleString()}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Live Chat */}
+            <div
+              className="rounded-2xl overflow-hidden flex flex-col flex-1"
+              style={{ background: C.cardBg, border: `1.5px solid ${C.cardBorder}` }}
+            >
+              <div className="px-3.5 py-2.5 flex items-center justify-between flex-shrink-0" style={{ borderBottom: "1px solid rgba(106,217,114,0.2)" }}>
+                <div className="flex items-center gap-1.5">
+                  <MessageCircle size={13} color={C.green} />
+                  <span className="font-bold text-xs" style={{ color: C.textLight }}>Live Chat</span>
+                </div>
+                <span className="text-[10px]" style={{ color: C.textMuted }}>{chatMessages.length} msgs</span>
+              </div>
+
+              <div className="flex-1 overflow-y-auto px-3 py-2 flex flex-col gap-1.5 min-h-0">
+                {chatMessages.length === 0 ? (
+                  <div className="flex-1 flex items-center justify-center text-xs text-center" style={{ color: C.textMuted }}>
+                    No messages yet. Share your thoughts!
+                  </div>
+                ) : chatMessages.map(msg => (
+                  <div key={msg.id}>
+                    <div className="flex justify-between mb-0.5">
+                      <span className="text-[10px] font-bold" style={{ color: msg.user === username ? C.green : C.textMuted }}>
+                        {msg.user === username ? "You" : msg.user}
+                      </span>
+                      <span className="text-[9px]" style={{ color: C.textMuted }}>{msg.time}</span>
+                    </div>
+                    <div
+                      className="text-[11px] leading-snug rounded-lg px-2 py-1"
+                      style={{ color: C.textLight, background: msg.user === username ? "rgba(106,217,114,0.08)" : C.innerBg }}
+                    >
+                      {msg.text}
+                    </div>
+                  </div>
+                ))}
+                <div ref={chatEndRef} />
+              </div>
+
+              <div className="px-2.5 py-1.5 flex gap-1.5 items-center flex-shrink-0" style={{ borderTop: "1px solid rgba(106,217,114,0.2)" }}>
+                <input
+                  value={chatInput}
+                  onChange={e => setChatInput(e.target.value)}
+                  onKeyDown={e => e.key === "Enter" && sendMessage()}
+                  placeholder="Is this legit or trolling?"
+                  className="flex-1 border-none rounded-lg px-2.5 py-1.5 text-[11px] outline-none"
+                  style={{ background: C.innerBg, color: C.textLight, fontFamily: "inherit" }}
+                />
+                <button onClick={sendMessage} className="bg-transparent border-none cursor-pointer flex items-center p-0.5" style={{ color: C.green }}>
+                  <Send size={14} />
+                </button>
+              </div>
+            </div>
+
+          </div>
         </div>
       </div>
     </div>
