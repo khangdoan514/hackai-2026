@@ -3,7 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from openai import AsyncOpenAI, OpenAI # type: ignore
 from app.config import settings
-from datetime import datetime
+from datetime import datetime, timezone
 from pathlib import Path
 from pydantic import BaseModel
 import uvicorn
@@ -250,6 +250,52 @@ def get_ranked_news():
         json.dump(result, f, indent=2)
 
     return result
+
+FINNHUB_API_KEY = "d6mp2lhr01qir35hu8p0d6mp2lhr01qir35hu8pg"
+FINNHUB_BASE_URL = "https://finnhub.io/api/v1"
+
+@app.get("/stocks/latest")
+def get_latest_stock(symbol: str = Query(..., min_length=1, max_length=10)):
+    """
+    Returns the latest stock price for a symbol in a simple format
+    that works nicely with a line chart.
+    """
+    url = f"{FINNHUB_BASE_URL}/quote"
+    params = {
+        "symbol": symbol.upper(),
+        "token": FINNHUB_API_KEY,
+    }
+
+    try:
+        response = requests.get(url, params=params, timeout=15)
+        response.raise_for_status()
+        data = response.json()
+    except requests.RequestException as e:
+        raise HTTPException(status_code=502, detail=f"Stock API request failed: {e}")
+
+    # Finnhub returns c=0 sometimes for invalid/no data
+    current_price = data.get("c")
+    if current_price is None or current_price == 0:
+        raise HTTPException(status_code=404, detail=f"No latest price found for symbol '{symbol}'")
+
+    return {
+        "symbol": symbol.upper(),
+        "time": datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S"),
+        "value": float(current_price),
+        "open": float(data.get("o", 0)),
+        "high": float(data.get("h", 0)),
+        "low": float(data.get("l", 0)),
+        "previous_close": float(data.get("pc", 0)),
+    }
+@app.get("/stocks/history")
+def get_stock_history(symbol: str):
+    return [
+        {"time": "2026-02-01", "value": 185},
+        {"time": "2026-02-08", "value": 188},
+        {"time": "2026-02-15", "value": 184},
+        {"time": "2026-02-22", "value": 191},
+        {"time": "2026-03-01", "value": 193},
+    ]
 
 
 if __name__ == "__main__":
