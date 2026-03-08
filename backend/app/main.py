@@ -188,7 +188,7 @@ def get_ranked_news():
     params = {
         "q": '"CEO controversy" OR "CEO scandal" OR lawsuit OR fraud OR resignation',
         "language": "en",
-        "pageSize": 8,
+        "pageSize": 20,
         "sortBy": "relevancy"
     }
 
