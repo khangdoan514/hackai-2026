@@ -646,7 +646,7 @@ def save_to_csv(result: dict, csv_path: str):
         "not flagged as sarcastic"
     )
     hist_str = (
-        f"{hist_rate:.0%} of historically similar tweets caused a market move "
+        f"{hist_rate:.0%} of historically similar incidents caused a market move "
         f"(avg {avg_move:.1f}% price change)"
     )
     sentiment_analysis = (
