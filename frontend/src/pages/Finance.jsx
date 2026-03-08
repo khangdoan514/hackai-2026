@@ -13,69 +13,6 @@ const WATCHLIST = [
 ];
 
 const RANGES = ["1D", "5D", "1M", "3M", "1Y", "5Y"];
-import { useState, useMemo } from "react"
-import { AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from "recharts"
-
-const STOCKS = [
-  { ticker: "NVDA", name: "NVIDIA Corporation",           price: 177.82, change: -5.52,  pct: -3.01, base: 177, volume: "45.2M", marketCap: "438B", pe: 54.3 },
-  { ticker: "ONDS", name: "Ondas Inc.",                   price: 9.83,   change: -0.63,  pct: -6.05, base: 9.8,  volume: "1.2M", marketCap: "89M", pe: null },
-  { ticker: "AAL",  name: "American Airlines",            price: 11.18,  change: -0.61,  pct: -5.17, base: 11.2, volume: "32.1M", marketCap: "7.3B", pe: 11.2 },
-  { ticker: "MRVL", name: "Marvell Technology",           price: 89.57,  change: +13.89, pct: +18.35,base: 89.5, volume: "28.4M", marketCap: "77.4B", pe: 42.8 },
-  { ticker: "DAWN", name: "Day One Biopharmaceuticals",   price: 21.20,  change: +8.42,  pct: +65.88,base: 21.2, volume: "15.6M", marketCap: "2.1B", pe: null },
-  { ticker: "PLUG", name: "Plug Power Inc.",              price: 2.13,   change: -0.16,  pct: -6.99, base: 2.1,  volume: "18.3M", marketCap: "1.4B", pe: null },
-  { ticker: "INTC", name: "Intel Corporation",            price: 43.42,  change: -2.53,  pct: -5.51, base: 43.4, volume: "52.1M", marketCap: "184B", pe: 32.1 },
-  { ticker: "SOFI", name: "SoFi Technologies",            price: 18.90,  change: -0.35,  pct: -1.82, base: 18.9, volume: "22.7M", marketCap: "20.1B", pe: null },
-  { ticker: "PLTR", name: "Palantir Technologies",        price: 157.16, change: +4.49,  pct: +2.94, base: 157,  volume: "41.3M", marketCap: "356B", pe: 312.4 },
-  { ticker: "TSLA", name: "Tesla, Inc.",                  price: 396.73, change: -8.82,  pct: -2.17, base: 396,  volume: "38.9M", marketCap: "1.27T", pe: 112.8 },
-  { ticker: "F",    name: "Ford Motor Company",           price: 12.15,  change: -0.19,  pct: -1.54, base: 12.1, volume: "33.2M", marketCap: "48.2B", pe: 11.5 },
-  { ticker: "PFE",  name: "Pfizer Inc.",                  price: 27.05,  change: +0.44,  pct: +1.65, base: 27.0, volume: "19.8M", marketCap: "153B", pe: 17.8 },
-  { ticker: "AMZN", name: "Amazon.com, Inc.",             price: 213.21, change: -5.73,  pct: -2.62, base: 213,  volume: "29.4M", marketCap: "2.24T", pe: 41.2 },
-  { ticker: "IOVA", name: "Iovance Biotherapeutics",      price: 5.13,   change: +0.55,  pct: +12.01,base: 5.1,  volume: "8.7M", marketCap: "1.5B", pe: null },
-  { ticker: "PBR",  name: "Petróleo Brasileiro",          price: 17.60,  change: +0.87,  pct: +5.20, base: 17.6, volume: "15.3M", marketCap: "114B", pe: 5.2 },
-  { ticker: "PATH", name: "UiPath, Inc.",                 price: 11.86,  change: +0.31,  pct: +2.68, base: 11.8, volume: "4.2M", marketCap: "6.7B", pe: null },
-  { ticker: "VALE", name: "Vale S.A.",                    price: 14.97,  change: -0.45,  pct: -2.92, base: 15.0, volume: "12.5M", marketCap: "64.2B", pe: 5.8 },
-  { ticker: "NOK",  name: "Nokia Oyj",                    price: 7.74,   change: -0.11,  pct: -1.40, base: 7.7,  volume: "8.9M", marketCap: "42.8B", pe: 24.6 },
-  { ticker: "RKT",  name: "Rocket Companies",             price: 14.95,  change: -0.71,  pct: -4.53, base: 15.0, volume: "3.1M", marketCap: "29.4B", pe: 18.2 },
-  { ticker: "RIG",  name: "Transocean Ltd.",              price: 5.93,   change: -0.20,  pct: -3.26, base: 5.9,  volume: "6.7M", marketCap: "5.2B", pe: null },
-  { ticker: "NU",   name: "Nu Holdings Ltd.",             price: 14.58,  change: -0.24,  pct: -1.62, base: 14.6, volume: "11.2M", marketCap: "69.8B", pe: 45.3 },
-  { ticker: "DNN",  name: "Denison Mines Corp.",          price: 3.67,   change: -0.21,  pct: -5.41, base: 3.7,  volume: "4.3M", marketCap: "3.3B", pe: null },
-  { ticker: "OPEN", name: "Opendoor Technologies",        price: 5.00,   change: -0.18,  pct: -3.47, base: 5.0,  volume: "5.8M", marketCap: "3.5B", pe: null },
-  { ticker: "BBD",  name: "Banco Bradesco S.A.",          price: 3.68,   change: -0.06,  pct: -1.60, base: 3.7,  volume: "9.1M", marketCap: "39.2B", pe: 8.4 },
-]
-
-const RANGES = ["1D", "5D", "1M", "3M", "1Y", "5Y"]
-
-function generateChartData(base, pct, points = 100) {
-  const data = []
-  let p = base * (1 - Math.abs(pct) / 100 * 0.7)
-  const trend = pct >= 0 ? 1 : -1
-  const now = Date.now()
-  for (let i = 0; i < points; i++) {
-    p += (Math.random() - 0.47) * base * 0.015
-    p += trend * base * 0.002 * (i / points)
-    p = Math.max(base * 0.7, p)
-    const t = new Date(now - (points - i) * 5 * 60 * 1000)
-    data.push({
-      time: t.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
-      value: parseFloat(p.toFixed(2)),
-    })
-  }
-  data[data.length - 1].value = base
-  return data
-}
-
-const CustomTooltip = ({ active, payload, color }) => {
-  if (active && payload && payload.length) {
-    return (
-      <div className="bg-[#0a0a0a]/98 border rounded-lg p-3 shadow-xl font-mono text-xs"
-           style={{ borderColor: `${color}66` }}>
-        <div className="text-gray-400 mb-1 text-[11px]">{payload[0].payload.time}</div>
-        <div className="font-bold text-base" style={{ color }}>${payload[0].value.toFixed(2)}</div>
-      </div>
-    )
-  }
-  return null
-}
 
 export default function Finance() {
   const chartContainerRef = useRef(null);
@@ -292,9 +229,6 @@ export default function Finance() {
     };
   }, [symbol, range]);
 
-  const dayRange = `${Math.min(stock.price, stock.price - stock.change).toFixed(2)} - ${Math.max(stock.price, stock.price - stock.change).toFixed(2)}`
-  const yearRange = `${(stock.price * 0.7).toFixed(2)} - ${(stock.price * 1.5).toFixed(2)}`
-
   return (
     <div
       onClick={() => setOpen(false)}
@@ -402,21 +336,6 @@ export default function Finance() {
                   {label}
                 </div>
                 <div className="text-base font-bold text-white">{value}</div>
-              </div>
-            ))}
-          </div>
-
-          {/* Key metrics */}
-          <div className="mt-5 grid grid-cols-4 gap-4 bg-white/2 rounded-xl p-4 border border-white/6">
-            {[
-              ["VOLUME", stock.volume, "#fff"],
-              ["MARKET CAP", stock.marketCap, "#fff"],
-              ["P/E RATIO", stock.pe ? stock.pe.toFixed(1) : "—", "#fff"],
-              ["DAY RANGE", dayRange, "rgba(255,255,255,0.9)"],
-            ].map(([label, val, c]) => (
-              <div key={label}>
-                <div className="text-[10px] text-white/35 mb-1.5 tracking-wider">{label}</div>
-                <div className="text-base font-bold" style={{ color: c }}>{val}</div>
               </div>
             ))}
           </div>
