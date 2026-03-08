@@ -1,9 +1,9 @@
 {
-  "controversial_excerpt": "GameStop's stock price surged from $17.25 on January 4, 2021, to $319.25 on January 27, 2021, driven by a combination of retail investors buying out-of-the-money call options, market makers forced to buy shares to hedge risk, and a massive short squeeze. Notably, the short interest exceeded 140% of the outstanding float, indicating widespread naked short selling, which is generally prohibited and raises regulatory concerns. This frenzy, fueled by social media and retail investor enthusiasm, forced hedge funds with short positions to cover, pushing prices even higher. However, this unsustainable euphoria is expected to end when margin calls subside and market makers unwind hedges, potentially leaving late investors with significant losses. The episode highlights the clash between speculative trading dynamics and fundamental company value, with GameStop's business prospects remaining uncertain amid this volatile market mania.",
+  "controversial_excerpt": "Former McDonald\u2019s CEO Steve Easterbrook returned over $105 million in equity and cash following revelations that he lied about multiple consensual sexual relationships with employees during his tenure. Initially terminated in 2019 for a single inappropriate relationship, further investigation uncovered at least three such relationships, destruction of evidence, and approval of a significant stock grant to one involved employee. McDonald\u2019s sued to claw back a $40 million exit package, asserting Easterbrook\u2019s dishonesty and breach of duty. The scandal tarnishes McDonald\u2019s family-friendly brand image and raises serious governance concerns, especially as Easterbrook had overseen significant company growth and stock price gains. Explicit photos and videos sent from his work email to personal accounts further deepen the misconduct allegations. Industry voices emphasize the importance of clawback provisions and ethical leadership, underscoring the broader implications for corporate accountability and executive behavior standards.",
   "ticker_tags": [
-    "GME"
+    "MCD"
   ],
   "controversy_score": 0.95,
-  "reason": "The most controversial aspect is the unprecedented short interest exceeding 100% of float, implying illegal naked short selling and triggering a volatile short squeeze driven by retail investors, raising regulatory and market stability concerns.",
-  "article": "article4.txt"
+  "reason": "The massive financial clawback combined with multiple sexual misconduct allegations against a high-profile CEO severely impacts McDonald\u2019s brand and raises critical governance and ethical issues.",
+  "article": "article9.txt"
 }

@@ -1,2 +1,14 @@
 company,current_stock_price,ceo,sentiment,30d_return,direction
-GameStop Corp.,$24.37,Mr. Ryan  Cohen,POSITIVE/BULLISH conf=100% irony=0.06 pat=REGULATORY_ACTION,-4.5,reduction
+"Papa John's International, Inc.",$30.70,Mr. Todd Allan Penegor,NEGATIVE/BEARISH conf=100% irony=0.15 pat=CEO_RACIAL_SCANDAL,-17.5,reduction
+Roblox Corporation,$63.53,Mr. David  Baszucki,NEUTRAL/NEUTRAL conf=53% irony=0.12 pat=REGULATORY_ACTION,-4.5,reduction
+Anheuser-Busch InBev SA/NV,$73.65,Michel Doukeris,NEGATIVE/BEARISH conf=67% irony=0.09 pat=BRAND_BOYCOTT,-9.2,reduction
+VictoryShares Pioneer Asset-Based Inc ETF,$25.05,N/A,NEGATIVE/BEARISH conf=67% irony=0.09 pat=BRAND_BOYCOTT,-9.2,reduction
+GameStop Corp.,$24.37,Mr. Ryan  Cohen,NEUTRAL/NEUTRAL conf=34% irony=0.06 pat=REGULATORY_ACTION,-4.5,reduction
+McDonald's Corporation,$328.06,Mr. Christopher J. Kempczinski,NEGATIVE/BEARISH conf=100% irony=0.12 pat=BRAND_BOYCOTT,-9.2,reduction
+Restaurant Brands International Inc.,$73.98,N/A,NEGATIVE/BEARISH conf=100% irony=0.12 pat=BRAND_BOYCOTT,-9.2,reduction
+The Boeing Company,$231.11,Mr. Robert K. Ortberg,NEGATIVE/BEARISH conf=100% irony=0.06 pat=EARNINGS_MISS,-12.0,reduction
+Airbus SE,$50.73,Mr. Guillaume M.J.D Faury,NEGATIVE/BEARISH conf=100% irony=0.06 pat=EARNINGS_MISS,-12.0,reduction
+Feltex Carpets Ltd,N/A,N/A,NEGATIVE/BEARISH conf=100% irony=0.18 pat=REGULATORY_ACTION,-4.5,reduction
+ATVI,N/A,N/A,NEGATIVE/BEARISH conf=100% irony=0.09 pat=CEO_MISCONDUCT_RESIGNATION,-6.3,reduction
+Microsoft Corporation,$408.96,Mr. Satya  Nadella,NEGATIVE/BEARISH conf=100% irony=0.09 pat=CEO_MISCONDUCT_RESIGNATION,-6.3,reduction
+McDonald's Corporation,$328.06,Mr. Christopher J. Kempczinski,NEGATIVE/BEARISH conf=57% irony=0.03 pat=REGULATORY_ACTION,-4.5,reduction
